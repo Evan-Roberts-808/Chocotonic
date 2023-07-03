@@ -67,7 +67,7 @@ class Payment_Detail(db.Model, SerializerMixin):
     __tablename__ = 'payment_details'
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     card_number = db.Column(db.String, nullable=False)
     cardholder_name = db.Column(db.String, nullable=False)
     expiration_month = db.Column(db.Integer, nullable=False)
@@ -160,7 +160,7 @@ class Product(db.Model, SerializerMixin):
     allergens = db.Column(db.Text)
     ingredients = db.Column(db.Text)
     chocolate_type = db.Column(db.Text)
-    category_id = db.Column(db.Integer, db.ForeignKey("category.id"))
+    category_id = db.Column(db.Integer, db.ForeignKey("categories.id"))
 
     # Relationships
     category = db.relationship("Category", backref="products")
@@ -180,8 +180,8 @@ class Review(db.Model, SerializerMixin):
     __tablename__ = 'reviews'
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
-    product_id = db.Column(db.Integer, db.ForeignKey("product.id"))
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    product_id = db.Column(db.Integer, db.ForeignKey("products.id"))
     rating = db.Column(db.Integer)
     review_text = db.Column(db.Text)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
@@ -211,7 +211,7 @@ class Cart(db.Model, SerializerMixin):
     __tablename__ = 'carts'
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     # Relationships
 
@@ -223,8 +223,8 @@ class Cart_Item(db.Model, SerializerMixin):
     __tablename__ = 'cart_items'
 
     id = db.Column(db.Integer, primary_key=True)
-    cart_id = db.Column(db.Integer, db.ForeignKey('cart.id'))
-    product_id = db.Column(db.Integer, db.ForeignKey('product.id'))
+    cart_id = db.Column(db.Integer, db.ForeignKey('carts.id'))
+    product_id = db.Column(db.Integer, db.ForeignKey('products.id'))
     quantity = db.Column(db.Integer)
 
     # Relationships
@@ -237,9 +237,9 @@ class Order(db.Model, SerializerMixin):
     __tablename__ = 'orders'
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     total_price = db.Column(db.Float, nullable=False)
-    status = db.Column(db.String, db.ForeignKey("status.id"))
+    status = db.Column(db.String, db.ForeignKey("statuses.id"))
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
@@ -253,8 +253,8 @@ class OrderItem(db.Model, SerializerMixin):
     __tablename__ = 'order_items'
 
     id = db.Column(db.Integer, primary_key=True)
-    order_id = db.Column(db.Integer, db.ForeignKey("order.id"))
-    product_id = db.Column(db.Integer, db.ForeignKey("product.id"))
+    order_id = db.Column(db.Integer, db.ForeignKey("orders.id"))
+    product_id = db.Column(db.Integer, db.ForeignKey("products.id"))
     quantity = db.Column(db.Integer, nullable=False)
     price = db.Column(db.Float, nullable=False)
     created_at = db.Column(db.DateTime, server_default=db.func.now())

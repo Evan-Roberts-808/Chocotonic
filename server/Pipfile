@@ -18,6 +18,8 @@ honcho = "*"
 gunicorn = "*"
 flask-session = "*"
 creditcard = "*"
+flask-login = "*"
+flask-bcrypt = "*"
 
 [dev-packages]
 
