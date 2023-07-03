@@ -16,6 +16,8 @@ ipdb = "*"
 requests = "*"
 honcho = "*"
 gunicorn = "*"
+flask-session = "*"
+creditcard = "*"
 
 [dev-packages]
 
