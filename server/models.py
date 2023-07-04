@@ -121,7 +121,6 @@ class Address(db.Model, SerializerMixin):
 
     # Relationships
     user = db.relationship("User", back_populates="addresses")
-    payment_details = db.relationship("Payment_Detail", back_populates="user")
 
     # Validations
     @validates('postal_code')
@@ -199,7 +198,7 @@ class Review(db.Model, SerializerMixin):
         if not rating or rating < 0 or rating > 5:
             raise ValueError(' Invalid rating value, must be between 0 and 5')
         return rating
-    
+
     @validates('review_text')
     def validate_review_text(self, key, review_text):
         if not review_text.strip():
@@ -239,7 +238,7 @@ class Order(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     total_price = db.Column(db.Float, nullable=False)
-    status = db.Column(db.String, db.ForeignKey("statuses.id"))
+    status_id = db.Column(db.String, db.ForeignKey("order_statuses.id"))
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
