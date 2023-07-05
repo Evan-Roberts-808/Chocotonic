@@ -1,8 +1,8 @@
-"""Initial migration
+"""empty message
 
-Revision ID: 333c6f20336b
+Revision ID: d5938d577544
 Revises: 
-Create Date: 2023-07-03 16:06:03.270496
+Create Date: 2023-07-04 16:42:57.632358
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '333c6f20336b'
+revision = 'd5938d577544'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -63,8 +63,10 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=True),
     sa.Column('total_price', sa.Float(), nullable=False),
+    sa.Column('status_id', sa.String(), nullable=True),
     sa.Column('created_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
+    sa.ForeignKeyConstraint(['status_id'], ['order_statuses.id'], name=op.f('fk_orders_status_id_order_statuses')),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], name=op.f('fk_orders_user_id_users')),
     sa.PrimaryKeyConstraint('id', name=op.f('pk_orders'))
     )
@@ -87,6 +89,7 @@ def upgrade():
     sa.Column('image_1', sa.String(), nullable=False),
     sa.Column('image_2', sa.String(), nullable=True),
     sa.Column('image_3', sa.String(), nullable=True),
+    sa.Column('quantity', sa.Integer(), nullable=False),
     sa.Column('allergens', sa.Text(), nullable=True),
     sa.Column('ingredients', sa.Text(), nullable=True),
     sa.Column('chocolate_type', sa.Text(), nullable=True),

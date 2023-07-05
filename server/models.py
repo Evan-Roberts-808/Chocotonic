@@ -8,8 +8,7 @@ from sqlalchemy.ext.hybrid import hybrid_property
 from collections import OrderedDict
 from flask_login import UserMixin, LoginManager
 import re
-import creditcard
-import datetime
+from datetime import datetime
 
 from config import db, bcrypt
 
@@ -28,11 +27,16 @@ class User(db.Model, SerializerMixin, UserMixin):
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
     # Relationships
-    cart = db.relationship("Cart", back_populates="user")
+    cart = db.relationship("Cart", uselist=False,
+                           back_populates="user", cascade="all, delete-orphan")
+
     reviews = db.relationship("Review", back_populates="user")
     addresses = db.relationship("Address", back_populates="user")
     orders = db.relationship("Order", back_populates="user")
     payment_details = db.relationship("Payment_Detail", back_populates="user")
+
+    # Serialize Rules
+    serialize_rules = ('-cart',)
 
     # Validations
     @validates('email')
@@ -82,7 +86,7 @@ class Payment_Detail(db.Model, SerializerMixin):
         if not card_number or card_number.isspace():
             raise ValueError("Card number is required.")
 
-        if not creditcard.validate(card_number):
+        if not re.match(r'^[0-9]{16}$', card_number):
             raise ValueError("Invalid card number format.")
 
         return card_number
@@ -113,7 +117,7 @@ class Address(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     address_line_1 = db.Column(db.Text, nullable=False)
-    address_line_2 = db.Column(db.Text, nullable=False)
+    address_line_2 = db.Column(db.Text, nullable=True)
     city = db.Column(db.Text, nullable=False)
     state = db.Column(db.String, nullable=False)
     postal_code = db.Column(db.Integer, nullable=False)
@@ -122,11 +126,17 @@ class Address(db.Model, SerializerMixin):
     # Relationships
     user = db.relationship("User", back_populates="addresses")
 
+    # Serialize Rules
+    serialize_rules = ("-user",)
+
     # Validations
     @validates('postal_code')
     def validate_postal_code(self, key, postal_code):
-        if postal_code < 10000 or postal_code > 99999:
+        pattern = r'^\d{5}$'
+
+        if not re.match(pattern, str(postal_code)):
             raise ValueError('Invalid postal code')
+
         return postal_code
 
     @validates('state')
@@ -141,8 +151,8 @@ class Address(db.Model, SerializerMixin):
 
     @validates('address_line_1', 'city', 'address_type')
     def validate_non_empty_fields(self, key, value):
-        if not value.strip():
-            raise ValueError(f"{key} must not be empty.")
+        if value is not None and not value.strip():
+            raise ValueError("Field must not be empty.")
         return value
 
 
@@ -156,6 +166,7 @@ class Product(db.Model, SerializerMixin):
     image_1 = db.Column(db.String, nullable=False)
     image_2 = db.Column(db.String, nullable=True)
     image_3 = db.Column(db.String, nullable=True)
+    quantity = db.Column(db.Integer, nullable=False, default=250)
     allergens = db.Column(db.Text)
     ingredients = db.Column(db.Text)
     chocolate_type = db.Column(db.Text)
@@ -166,6 +177,9 @@ class Product(db.Model, SerializerMixin):
     order_items = db.relationship("OrderItem", back_populates="product")
     reviews = db.relationship("Review", back_populates="product")
     cart_items = db.relationship("Cart_Item", back_populates="product")
+
+    # Serialize Rules
+    serialize_rules = ("-category", "-order_items", "-reviews", "-cart_items")
 
 
 class Category(db.Model, SerializerMixin):
@@ -217,6 +231,9 @@ class Cart(db.Model, SerializerMixin):
     user = db.relationship("User", back_populates="cart")
     cart_items = db.relationship("Cart_Item", back_populates="cart")
 
+    # serialize rules
+    serialize_rules = ("-user", "-cart_items")
+
 
 class Cart_Item(db.Model, SerializerMixin):
     __tablename__ = 'cart_items'
@@ -231,6 +248,9 @@ class Cart_Item(db.Model, SerializerMixin):
     cart = db.relationship("Cart", back_populates="cart_items")
     product = db.relationship("Product", back_populates="cart_items")
 
+    # Serialize Rules
+    serialize_rules = ("-cart", "-product")
+
 
 class Order(db.Model, SerializerMixin):
     __tablename__ = 'orders'
@@ -238,7 +258,7 @@ class Order(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     total_price = db.Column(db.Float, nullable=False)
-    status_id = db.Column(db.String, db.ForeignKey("order_statuses.id"))
+    status_id = db.Column(db.Integer, db.ForeignKey("order_statuses.id"))
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
@@ -246,6 +266,9 @@ class Order(db.Model, SerializerMixin):
     user = db.relationship("User", back_populates="orders")
     order_items = db.relationship("OrderItem", back_populates="order")
     status = db.relationship("Order_Status", backref="orders")
+
+    # Serialize Rules
+    # serialize_rules = ("-user", "-order_items")
 
 
 class OrderItem(db.Model, SerializerMixin):
@@ -263,9 +286,21 @@ class OrderItem(db.Model, SerializerMixin):
     order = db.relationship("Order", back_populates="order_items")
     product = db.relationship("Product", back_populates="order_items")
 
+    # Serialize Rules
+    serialize_rules = ("-order", "-product")
+
 
 class Order_Status(db.Model, SerializerMixin):
     __tablename__ = 'order_statuses'
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False, unique=True)
+
+    # Serialize Rules
+    serialize_rules = ("-orders",)
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "name": self.name
+        }
