@@ -36,7 +36,8 @@ class User(db.Model, SerializerMixin, UserMixin):
     payment_details = db.relationship("Payment_Detail", back_populates="user")
 
     # Serialize Rules
-    serialize_rules = ('-cart',)
+    serialize_rules = ('-cart', '-reviews', '-addresses',
+                       '-orders', '-payment_details')
 
     # Validations
     @validates('email')
