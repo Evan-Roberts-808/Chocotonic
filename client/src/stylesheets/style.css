@@ -1,5 +1,8 @@
 :root{
     --chocotonic-green: #317d4f;
+    --chocotonic-green-hover: #24673f;
+    --chocotonic-grey: #d2d3d4;
+    --light-mode: #EFEFEF;
 }
 
 /* General */
@@ -12,6 +15,7 @@ html, body {
 
 body {
     overflow-x: hidden;
+    background-color: var(--light-mode);
 }
 
 .App {
@@ -66,7 +70,36 @@ body {
     color: var(--chocotonic-green)
   }
 
+  .footer {
+    background-color: var(--chocotonic-grey);
+  }
+
+  .social-banner {
+    border-bottom: 1px solid #b6b6b7;
+  }
+
   .copyright-banner {
     background-color: var(--chocotonic-green);
     color: #efefef;
+  }
+
+  /* Sign up and Sign in Forms */
+
+  .signup-button, .login-button {
+    margin-top: 10px;
+    background-color: var(--chocotonic-green);
+    border-color: var(--chocotonic-green)
+  }
+
+  .signup-button:hover, .login-button:hover {
+    background-color: var(--chocotonic-green-hover);
+    border-color: var(--chocotonic-green-hover)
+  }
+
+  .signup-form, .login-form {
+    padding: 20px;
+    width: 50%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-radius: 20px;
   }

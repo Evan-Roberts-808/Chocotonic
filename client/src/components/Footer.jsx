@@ -5,8 +5,8 @@ import { FaTwitter, FaInstagram, FaLinkedin, FaGithub, FaHome, FaEnvelope, FaPho
 
 function Footer() {
   return (
-    <MDBFooter bgColor='light' className='text-center text-lg-start text-muted'>
-      <section className='d-flex justify-content-center p-4 border-bottom'>
+    <MDBFooter className='text-center text-lg-start text-muted footer'>
+      <section className='d-flex justify-content-center p-4 social-banner'>
         <div className='me-5 d-none d-lg-block'>
           <span>Get connected with us on social networks:</span>
         </div>
