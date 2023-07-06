@@ -70,7 +70,7 @@ function Header() {
                   onMouseEnter={handleMouseEnterShop}
                   onMouseLeave={handleMouseLeaveShop}
                 >
-                  <NavDropdown.Item>Shop All</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/shop">Shop All</NavDropdown.Item>
                   <NavDropdown.Divider />
                   <div className="category-label">
                     <span>Shop by Category</span>
@@ -131,7 +131,7 @@ function Header() {
                   onMouseEnter={handleMouseEnterShop}
                   onMouseLeave={handleMouseLeaveShop}
                 >
-                  <NavDropdown.Item>Shop All</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/shop">Shop All</NavDropdown.Item>
                   <NavDropdown.Divider />
                   <div className="category-label">
                     <span>Shop by Category</span>
