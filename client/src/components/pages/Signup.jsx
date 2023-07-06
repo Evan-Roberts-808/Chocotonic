@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Row, Col, Container } from "react-bootstrap";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import UserContext from '../../context/UserContext'
 
 function Signup() {
-
+  const { setUser } = useContext(UserContext)
   const navigate = useNavigate()
 
   const initialValues = {
@@ -35,7 +36,8 @@ function Signup() {
       body: JSON.stringify(values)
     })
     .then((r) => r.json())
-    .then((data) => {
+    .then((user) => {
+      setUser(user)
       navigate("/")
     })
     .catch((err) => console.error(err))
@@ -123,7 +125,7 @@ function Signup() {
                       className="error-message"
                     />
                   </div>
-                  <button type="submit" className="btn btn-primary signup-button">
+                  <button type="submit" className="signup-button">
                     Submit
                   </button>
           </Form>
