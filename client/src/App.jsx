@@ -14,10 +14,25 @@ import Product from './components/pages/Product.jsx';
 import Shop from './components/pages/Shop.jsx';
 import ShopByCategory from './components/pages/ShopByCategory.jsx';
 import Sustainability from './components/pages/Sustainability.jsx';
+import UserContext from './context/UserContext';
 
 function App() {
 
+  const [user, setUser] = useState(null)
+  
+  useEffect(() => {
+    if (user == null) {
+      fetch('/api/check_session')
+      .then(response => {
+        if (response.ok) {
+          response.json().then(user => {setUser(user)})
+        }
+      })
+    }
+  },[])
+
   return (
+    <UserContext.Provider value={{user, setUser}}>
     <div className="App">
     <Router>
       <Header />
@@ -36,6 +51,7 @@ function App() {
       <Footer />
     </Router>
     </div>
+</UserContext.Provider>
   )
 }
 
