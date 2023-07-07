@@ -57,7 +57,8 @@ body {
 }
 
 .shopping-cart {
-    font-size: 22px
+    font-size: 22px;
+    color: #000;
 }
 
 .category-label {
@@ -349,4 +350,15 @@ input:focus {
 th {
   background-color: var(--chocotonic-green) !important;
   color:#fff !important;
+}
+
+/* Cart */
+
+.checkout-button {
+  margin-top: 10px;
+  width:15%;
+}
+
+.use-card {
+  margin-right: 20px;
 }

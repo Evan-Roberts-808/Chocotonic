@@ -100,15 +100,17 @@ function Header() {
                   onMouseLeave={handleMouseLeaveProfile}
                 >
                   <NavDropdown.Item as={Link} to={'/profile-details'}>View Profile</NavDropdown.Item>
-                  <NavDropdown.Item onClick={handleLogout}>
+                  <NavDropdown.Item onClick={handleLogout} as={Link} to={'/'}>
                     Logout
                   </NavDropdown.Item>
                 </NavDropdown>
               </Nav>
             </Navbar.Collapse>
-            <div className="shopping-cart-container">
-              <AiOutlineShoppingCart className="shopping-cart" />
-            </div>
+            <Link to={'/cart'}>
+              <div className="shopping-cart-container">
+                <AiOutlineShoppingCart className="shopping-cart" />
+              </div>
+            </Link>
           </>
         ) : (
           <>
@@ -161,9 +163,6 @@ function Header() {
                 </Nav.Link>
               </Nav>
             </Navbar.Collapse>
-            <div className="shopping-cart-container">
-              <AiOutlineShoppingCart className="shopping-cart" />
-            </div>
           </>
         )}
       </Container>

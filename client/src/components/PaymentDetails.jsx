@@ -62,6 +62,16 @@ function PaymentDetails() {
   const paymentValidationSchema = Yup.object().shape({
     cardholder_name: Yup.string().required("Cardholder name is required"),
     card_number: Yup.string().required("Card number is required"),
+    expiration_month: Yup.number()
+    .required("Expiration month is required")
+    .min(1, "Invalid month")
+    .max(12, "Invalid month"),
+  expiration_year: Yup.number()
+    .required("Expiration year is required")
+    .min(new Date().getFullYear(), "Invalid year"),
+  cvv: Yup.string()
+    .required("CVV is required")
+    .matches(/^\d{3}$/, "Invalid CVV"),
   });
 
   return (
