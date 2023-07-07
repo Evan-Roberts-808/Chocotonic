@@ -14,6 +14,10 @@ import Product from './components/pages/Product.jsx';
 import Shop from './components/pages/Shop.jsx';
 import ShopByCategory from './components/pages/ShopByCategory.jsx';
 import Sustainability from './components/pages/Sustainability.jsx';
+import Checkout from './components/pages/Checkout.jsx'
+import OrderHistory from './components/pages/OrderHistory.jsx'
+import Cart from './components/pages/Cart.jsx'
+import ProfileDetails from './components/pages/ProfileDetails.jsx'
 import UserContext from './context/UserContext';
 
 function App() {
@@ -47,6 +51,10 @@ function App() {
         <Route path="/shop" element={<Shop />} />
         <Route path="/shop/:id" element={<ShopByCategory />} />
         <Route path="/sustainability" element={<Sustainability />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/order-history" element={<OrderHistory />} />
+        <Route path="/profile-details" element={<ProfileDetails />} />
       </Routes>
       <Footer />
     </Router>
