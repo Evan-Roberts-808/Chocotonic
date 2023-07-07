@@ -282,3 +282,46 @@ body {
   .rating-option:hover {
     background-color: var(--chocotonic-green) !important;
   }
+
+  /* About Causes Sustainability */
+
+  .emblem {
+    width: 15%;
+  }
+
+  .horizontal-line-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .horizontal-line {
+    flex-grow: 1;
+    border-top: 2px solid var(--chocotonic-green);
+    margin: 0 50px;
+  }
+
+.about-column {
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.about-jumbotron {
+  position: relative;
+  background-image: url("https://dummyimage.com/2000x1000/bababa/000000.png&text=jumbotron");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.jumbotron-content {
+  width: 40%;
+}
+
+.jumbotron-text {
+  color: #fff;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  font-weight: 500;
+}
