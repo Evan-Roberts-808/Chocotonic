@@ -152,7 +152,8 @@ class UserOrders(Resource):
                 order_history.append({
                     "order_id": order.id,
                     "total_price": order.total_price,
-                    "status": order_status
+                    "status": order_status,
+                    "created": order.created_at.isoformat() if order.created_at else None
                 })
             return order_history, 200
         except Exception as e:

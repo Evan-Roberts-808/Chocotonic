@@ -325,3 +325,28 @@ body {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
   font-weight: 500;
 }
+
+/* Profile Page */
+
+.payment-click, .address-click {
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.payment-form-input, .address-form-input {
+  width: 30%;
+}
+
+.payment-form-button, .address-form-button {
+  margin-top: 20px;
+}
+
+input:focus {
+  outline: none !important;
+  box-shadow: 0 0 0 4px var(--chocotonic-green) !important;
+}
+
+th {
+  background-color: var(--chocotonic-green) !important;
+  color:#fff !important;
+}
