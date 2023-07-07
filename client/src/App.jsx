@@ -43,9 +43,9 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/account" element={<Account />} />
         <Route path="/causes" element={<Causes />} />
-        <Route path="/product" element={<Product />} />
+        <Route path="/product/:id" element={<Product />} />
         <Route path="/shop" element={<Shop />} />
-        <Route path="/shop/:category" element={<ShopByCategory />} />
+        <Route path="/shop/:id" element={<ShopByCategory />} />
         <Route path="/sustainability" element={<Sustainability />} />
       </Routes>
       <Footer />

@@ -377,7 +377,7 @@ class UserAddressById(Resource):
             return address.to_dict(), 200
         except Exception as e:
             print("Error occurred:", str(e))
-            return {"error": "An error occurred while updating the address", "message":str(e)}, 500
+            return {"error": "An error occurred while updating the address", "message": str(e)}, 500
 
     @login_required
     def delete(self, user_id, address_id):
@@ -450,6 +450,7 @@ class Products(Resource):
 
 
 class ProductByCategory(Resource):
+
     def get(self, category_id):
         try:
             products = Product.query.filter_by(category_id=category_id).all()
@@ -459,7 +460,18 @@ class ProductByCategory(Resource):
             return {"error": "Products not found for the specified category"}, 404
 
 
+class ProductById(Resource):
+
+    def get(self, id):
+        try:
+            product = Product.query.filter_by(id=id).first().to_dict()
+            return product, 200
+        except Exception as e:
+            return {"error": "Failed to retrieve product", "message": str(e)}, 500
+
+
 api.add_resource(Products, '/products')
+api.add_resource(ProductById, '/products/<int:id>')
 api.add_resource(ProductByCategory, '/products/category/<int:category_id>')
 
 # Cart Resource
@@ -645,6 +657,7 @@ class ProductReviews(Resource):
                 review_info = {
                     'review_id': review.id,
                     'user_id': review.user_id,
+                    'users_name': review.user.name,
                     'rating': review.rating,
                     'review_text': review.review_text,
                     'created_at': review.created_at.isoformat() if review.created_at else None
