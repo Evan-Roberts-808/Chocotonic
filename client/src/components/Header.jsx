@@ -75,11 +75,11 @@ function Header() {
                   <div className="category-label">
                     <span>Shop by Category</span>
                   </div>
-                  <NavDropdown.Item>Chocolate Bars</NavDropdown.Item>
-                  <NavDropdown.Item>Chocolate Bells</NavDropdown.Item>
-                  <NavDropdown.Item>Chocolate Squares</NavDropdown.Item>
-                  <NavDropdown.Item>Hot Chocolate</NavDropdown.Item>
-                  <NavDropdown.Item>Chocolate Truffles</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/shop/1">Chocolate Bars</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/shop/2">Chocolate Bells</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/shop/4">Chocolate Squares</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/shop/5">Hot Chocolate</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/shop/6">Chocolate Truffles</NavDropdown.Item>
                 </NavDropdown>
                 <NavDropdown
                   title="About Us"
@@ -136,11 +136,11 @@ function Header() {
                   <div className="category-label">
                     <span>Shop by Category</span>
                   </div>
-                  <NavDropdown.Item>Chocolate Bars</NavDropdown.Item>
-                  <NavDropdown.Item>Chocolate Bells</NavDropdown.Item>
-                  <NavDropdown.Item>Chocolate Squares</NavDropdown.Item>
-                  <NavDropdown.Item>Hot Chocolate</NavDropdown.Item>
-                  <NavDropdown.Item>Chocolate Truffles</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/shop/1">Chocolate Bars</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/shop/2">Chocolate Bells</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/shop/4">Chocolate Squares</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/shop/5">Hot Chocolate</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/shop/6">Chocolate Truffles</NavDropdown.Item>
                 </NavDropdown>
                 <NavDropdown
                   title="About Us"

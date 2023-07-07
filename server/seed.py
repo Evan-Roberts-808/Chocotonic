@@ -60,9 +60,25 @@ def clear_tables():
     db.session.commit()
 
 
+def add_http():
+    products = Product.query.all()
+    for product in products:
+        if product.image_1 and not product.image_1.startswith('https://'):
+            product.image_1 = f"https://{product.image_1}"
+        
+        if product.image_2 and not product.image_2.startswith('https://'):
+            product.image_2 = f"https://{product.image_2}"
+        
+        if product.image_3 and not product.image_3.startswith('https://'):
+            product.image_3 = f"https://{product.image_3}"
+        db.session.add(product)
+    db.session.commit()
+    pass
+
 if __name__ == "__main__":
     with app.app_context():
         # restore_categories()
         # restore_products()
-        clear_tables()
+        # clear_tables()
+        # add_http()
         pass

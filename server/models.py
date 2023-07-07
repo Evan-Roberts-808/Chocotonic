@@ -269,7 +269,6 @@ class Order(db.Model, SerializerMixin):
     status = db.relationship("Order_Status", backref="orders")
 
     # Serialize Rules
-    # serialize_rules = ("-user", "-order_items")
 
 
 class OrderItem(db.Model, SerializerMixin):
