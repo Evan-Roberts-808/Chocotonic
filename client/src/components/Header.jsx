@@ -88,9 +88,9 @@ function Header() {
                   onMouseEnter={handleMouseEnterAbout}
                   onMouseLeave={handleMouseLeaveAbout}
                 >
-                  <NavDropdown.Item>About Us</NavDropdown.Item>
-                  <NavDropdown.Item>Sustainability</NavDropdown.Item>
-                  <NavDropdown.Item>Causes</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/about">About Us</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/sustainability">Sustainability</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/causes">Causes</NavDropdown.Item>
                 </NavDropdown>
                 <NavDropdown
                   title="Profile"
@@ -99,7 +99,7 @@ function Header() {
                   onMouseEnter={handleMouseEnterProfile}
                   onMouseLeave={handleMouseLeaveProfile}
                 >
-                  <NavDropdown.Item>View Profile</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to={'/profile-details'}>View Profile</NavDropdown.Item>
                   <NavDropdown.Item onClick={handleLogout}>
                     Logout
                   </NavDropdown.Item>
@@ -149,9 +149,9 @@ function Header() {
                   onMouseEnter={handleMouseEnterAbout}
                   onMouseLeave={handleMouseLeaveAbout}
                 >
-                  <NavDropdown.Item>About Us</NavDropdown.Item>
-                  <NavDropdown.Item>Sustainability</NavDropdown.Item>
-                  <NavDropdown.Item>Causes</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/about">About Us</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/sustainability">Sustainability</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/causes">Causes</NavDropdown.Item>
                 </NavDropdown>
                 <Nav.Link as={Link} to="/signup">
                   Sign Up
