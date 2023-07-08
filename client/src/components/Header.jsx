@@ -40,7 +40,7 @@ function Header() {
         method: "POST",
         credentials: "same-origin",
       });
-      setUser(null); // Clear the user context after successful logout
+      setUser(null); 
     } catch (error) {
       console.log(error);
     }

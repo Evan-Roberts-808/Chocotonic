@@ -8,7 +8,7 @@ function Address() {
   const { user } = useContext(UserContext);
   const [addressDetails, setAddressDetails] = useState([]);
   const [showAddAddressForm, setShowAddAddressForm] = useState(false);
-console.log(addressDetails)
+
   useEffect(() => {
     fetch(`/api/addresses/${user.id}`)
       .then((response) => {
