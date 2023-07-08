@@ -9,7 +9,6 @@ function EnterPayment({ onNext }) {
   const { user } = useContext(UserContext);
   const [paymentDetails, setPaymentDetails] = useState(null);
   const [useCardOnRecord, setUseCardOnRecord] = useState(false);
-  console.log(paymentDetails)
 
   const paymentValidationSchema = Yup.object().shape({
     cardholder_name: Yup.string().required("Cardholder name is required"),
@@ -18,10 +17,10 @@ function EnterPayment({ onNext }) {
     .required("Expiration month is required")
     .min(1, "Invalid month")
     .max(12, "Invalid month"),
-  expiration_year: Yup.number()
+    expiration_year: Yup.number()
     .required("Expiration year is required")
     .min(new Date().getFullYear(), "Invalid year"),
-  cvv: Yup.string()
+    cvv: Yup.string()
     .required("CVV is required")
     .matches(/^\d{3}$/, "Invalid CVV"),
   });

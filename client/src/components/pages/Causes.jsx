@@ -24,7 +24,7 @@ function Causes() {
   <Container>
     <div className="jumbotron-content">
       <p className="jumbotron-text">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id ante vel eros scelerisque tempus eget sed justo.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id ante vel eros scelerisque tempus eget sed justo.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id ante vel eros scelerisque tempus eget sed justo.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id ante vel eros scelerisque tempus eget sed justo.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id ante vel eros scelerisque tempus eget sed justo.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id ante vel eros scelerisque tempus eget sed justo.
+      We are dedicated to making a positive impact through our commitment to various causes. Our passion for social responsibility drives us to support meaningful initiatives that address pressing social issues. Through our partnerships with charitable organizations, we strive to create positive change and uplift communities in need. By aligning our values with causes that promote education, healthcare, poverty alleviation, and social equality, we aim to make a difference in the lives of individuals and contribute to a better world. Together, we can build a brighter future and empower those who need it most.
       </p>
     </div>
   </Container>
@@ -36,8 +36,7 @@ function Causes() {
           <div className="about-column">
             <h4>Our Mission</h4>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla
-              id ante vel eros scelerisque tempus eget sed justo.
+            Our mission is to use the power of chocolate to drive social change and improve lives. We believe that everyone deserves access to basic necessities, education, and opportunities for growth. Through our philanthropic efforts, we strive to create a more equitable society where every individual has a chance to thrive. By supporting causes that align with our values, we work towards breaking down barriers and creating a world where everyone's potential can be realized. Together, let's make a difference, one chocolate at a time.
             </p>
           </div>
         </Col>
@@ -45,8 +44,7 @@ function Causes() {
           <div className="about-column">
             <h4>Causes We Support</h4>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla
-              id ante vel eros scelerisque tempus eget sed justo.
+            We are deeply committed to environmental conservation and sustainability. We believe in the urgent need to protect and preserve our planet for future generations. Through our dedicated efforts, we support causes that promote ecological balance, combat climate change, and foster sustainable practices. Our partnerships with environmental organizations allow us to actively contribute to reforestation initiatives, wildlife conservation, and the reduction of carbon footprint. By supporting these causes, we aim to make a tangible impact in safeguarding our natural resources and creating a greener, more sustainable world.
             </p>
           </div>
         </Col>
@@ -54,8 +52,7 @@ function Causes() {
           <div className="about-column">
             <h4>How You Can Help</h4>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla
-              id ante vel eros scelerisque tempus eget sed justo.
+            You can join us in making a difference. There are many ways you can support our causes and contribute to positive change. By purchasing our delicious chocolate treats, you are directly supporting our philanthropic efforts, as a portion of our proceeds is dedicated to charitable initiatives. Additionally, you can spread the word about our mission and causes by sharing our story with your friends and family. Together, we can raise awareness, inspire others to get involved, and create a ripple effect of positive change. Every small action counts, and together, we can create a better world for all.
             </p>
           </div>
         </Col>

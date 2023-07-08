@@ -24,7 +24,7 @@ function Sustainability() {
   <Container>
     <div className="jumbotron-content">
       <p className="jumbotron-text">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id ante vel eros scelerisque tempus eget sed justo.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id ante vel eros scelerisque tempus eget sed justo.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id ante vel eros scelerisque tempus eget sed justo.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id ante vel eros scelerisque tempus eget sed justo.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id ante vel eros scelerisque tempus eget sed justo.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id ante vel eros scelerisque tempus eget sed justo.
+      We are deeply committed to sustainability and environmental stewardship. We recognize the importance of preserving our planet for future generations and take proactive steps to minimize our ecological footprint. From sourcing ethically produced ingredients to implementing eco-friendly packaging solutions, we prioritize sustainable practices throughout our operations. We continuously strive to reduce waste, conserve energy, and support initiatives that promote environmental well-being. By choosing Chocotonic, you can indulge in our delectable chocolate treats while supporting a brand that is dedicated to creating a greener and more sustainable world.
       </p>
     </div>
   </Container>
@@ -36,8 +36,7 @@ function Sustainability() {
           <div className="about-column">
             <h4>Our Commitment to Sustainability</h4>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla
-              id ante vel eros scelerisque tempus eget sed justo.
+            At Chocotonic, sustainability is at the heart of everything we do. We are committed to making a positive impact on the environment through our responsible practices and conscious decision-making. From carefully selecting sustainable suppliers to implementing energy-efficient processes in our production facilities, we prioritize reducing our ecological footprint. We are dedicated to minimizing waste, conserving resources, and promoting biodiversity. Through continuous research and development, we strive to find innovative solutions that align with our commitment to sustainability. Our goal is not only to create delicious chocolates but also to contribute to a greener and more sustainable future for generations to come.
             </p>
           </div>
         </Col>
@@ -45,8 +44,7 @@ function Sustainability() {
           <div className="about-column">
             <h4>Sustainable Initiatives</h4>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla
-              id ante vel eros scelerisque tempus eget sed justo.
+            At Chocotonic, we are actively involved in a range of sustainable initiatives that contribute to a healthier planet. We work closely with local communities to source our ingredients ethically and support sustainable farming practices. Additionally, we prioritize recycling and waste reduction by implementing efficient manufacturing processes and utilizing eco-friendly packaging materials. We continuously explore innovative ways to minimize our environmental impact, such as investing in renewable energy sources and participating in reforestation projects. By engaging in these sustainable initiatives, we strive to create a positive change and inspire others to join us in building a more sustainable future for all.
             </p>
           </div>
         </Col>
@@ -54,8 +52,7 @@ function Sustainability() {
           <div className="about-column">
             <h4>Environmental Protection and Regeneration</h4>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla
-              id ante vel eros scelerisque tempus eget sed justo.
+            We are deeply committed to environmental protection and regeneration. We believe in the power of conscious actions to heal and restore our planet. That's why we actively participate in environmental initiatives and support projects that focus on restoring ecosystems, conserving natural resources, and promoting biodiversity. Through our partnerships with environmental organizations, we contribute to reforestation efforts, wildlife conservation, and sustainable farming practices. We believe that by taking responsibility for our environmental impact, we can play a vital role in preserving the Earth's beauty and ensuring a sustainable future for all. Together, we can make a difference and create a greener, healthier planet for generations to come.
             </p>
           </div>
         </Col>
