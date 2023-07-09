@@ -15,6 +15,7 @@ function ReviewContainer({ reviews }) {
   };
 
   const reviewsList = currentReviews.map((review) => {
+    console.log(review)
     const date = new Date(review.created_at);
     const formattedDate = date.toLocaleDateString('en-US', {
       year: 'numeric',
@@ -23,7 +24,7 @@ function ReviewContainer({ reviews }) {
     });
 
     return (
-      <Card className="col-sm-3 offset-1" key={review.id}>
+      <Card className="col-sm-3 offset-1" key={review.review_id}>
         <Card.Body>
           <Card.Title>{review.users_name}</Card.Title>
           <Card.Text>Review Left On: {formattedDate}</Card.Text>

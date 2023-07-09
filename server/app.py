@@ -677,8 +677,8 @@ class ProductReviews(Resource):
         try:
             user_id = current_user.id
             data = request.get_json()
-            rating = data.get('rating')
-            review_text = data.get('review')
+            rating = int(data.get('rating'))
+            review_text = data.get('review_text')
 
             product = Product.query.filter_by(id=product_id).first()
             if not product:
@@ -696,6 +696,7 @@ class ProductReviews(Resource):
             review_info = {
                 'review_id': review.id,
                 'user_id': review.user_id,
+                'users_name': review.user.name,
                 'rating': review.rating,
                 'review_text': review.review_text,
                 'created_at': review.created_at.isoformat() if review.created_at else None
@@ -707,7 +708,7 @@ class ProductReviews(Resource):
             return review_info, 201
 
         except Exception as e:
-            print(e)  # Print the exception details for debugging
+            print(e)
             return {'error': 'An error occurred while posting the review', 'message': str(e)}, 500
 
 

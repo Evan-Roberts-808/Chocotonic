@@ -202,6 +202,27 @@ body {
     margin: 0;
   }
 
+  .filter-heading {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .filter-options {
+    margin-bottom: 20px;
+  }
+  
+  .filter-option {
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  .filter-checkbox {
+    margin-right: 5px;
+  }
+
+
+
   /* Product Page */
   
   .details-tag, .reviews-tag {

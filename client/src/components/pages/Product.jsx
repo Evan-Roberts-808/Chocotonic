@@ -1,17 +1,16 @@
-import React, {useState, useEffect, useCallback, useRef} from 'react'
-import { useParams } from "react-router-dom";
-import { Row, Col, Container, Carousel, Button} from "react-bootstrap";
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { useParams } from 'react-router-dom';
+import { Row, Col, Container, Carousel, Button } from 'react-bootstrap';
 import ReviewContainer from '../ReviewContainer.jsx';
-import ReviewForm from '../ReviewForm.jsx'
+import ReviewForm from '../ReviewForm.jsx';
 
 function Product() {
-
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [images, setImages] = useState([]);
   const [quantity, setQuantity] = useState(1);
   const [activeSection, setActiveSection] = useState('details');
-  const [reviews, setReviews] = useState([])
+  const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
     fetch(`/api/products/${id}`)
@@ -26,11 +25,11 @@ function Product() {
 
   useEffect(() => {
     fetch(`/api/reviews/product/${id}`)
-    .then((r) => r.json())
-    .then(reviews => {
-      setReviews(reviews);
-    })
-  }, [id])
+      .then((r) => r.json())
+      .then((reviews) => {
+        setReviews(reviews);
+      });
+  }, [id]);
 
   useEffect(() => {
     if (product) {
@@ -71,20 +70,45 @@ function Product() {
 
   const calculateAverageRating = () => {
     if (reviews.length === 0) {
-      return "No Ratings Yet";
+      return 'No Ratings Yet';
     }
-    
+
     const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
     const averageRating = totalRating / reviews.length;
-    return averageRating.toFixed(1)
+    return averageRating.toFixed(1);
   };
 
-  const totalReviews = reviews.length
+  const totalReviews = reviews.length;
+
+  const addToCart = () => {
+    const data = {
+      product_id: product.id,
+      quantity: quantity,
+    };
+
+    fetch('/api/carts', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => {
+        if (response.ok) {
+          console.log('Item added to cart');
+        } else {
+          throw new Error('Error adding item to cart');
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
   return (
     <Container>
       <Row>
-      <Col md={6}>
+        <Col md={6}>
           {images.length > 1 ? (
             <Carousel className="product-carousel" interval={null}>
               {images.map((image, index) => (
@@ -93,30 +117,33 @@ function Product() {
                 </Carousel.Item>
               ))}
             </Carousel>
-          ) : (
-            images.length === 1 && (
-              <img src={images[0]} alt="Product" className="product-image" />
-            )
-          )}
+          ) : images.length === 1 ? (
+            <img src={images[0]} alt="Product" className="product-image" />
+          ) : null}
         </Col>
         <Col md={6}>
-        <div className="product-details">
+          <div className="product-details">
             <h3>{product.name}</h3>
             <h5>${product.price}</h5>
             <p>
-              <span className="rating">Rating: {calculateAverageRating()}</span>
-               | 
+              <span className="rating">Rating: {calculateAverageRating()}</span> |
               <span className="total-reviews">Total Reviews: {totalReviews}</span>
             </p>
             <div className="quantity-cart-buttons">
-              <Button className="quantity-button custom-btn-primary" onClick={handleQuantityDecrement}>
+              <Button
+                className="quantity-button custom-btn-primary"
+                onClick={handleQuantityDecrement}
+              >
                 -
               </Button>
-              <span className="quantity-value ">{quantity}</span>
-              <Button className="quantity-button custom-btn-primary" onClick={handleQuantityIncrement}>
+              <span className="quantity-value">{quantity}</span>
+              <Button
+                className="quantity-button custom-btn-primary"
+                onClick={handleQuantityIncrement}
+              >
                 +
               </Button>
-              <Button className="add-to-cart-button  custom-btn-primary">
+              <Button className="add-to-cart-button custom-btn-primary" onClick={addToCart}>
                 Add to Cart
               </Button>
             </div>
@@ -125,11 +152,25 @@ function Product() {
       </Row>
       <hr />
       <Row>
-        <Col md={6} className="d-flex align-items-center justify-content-center"><h4 className={activeSection === "details" ? "details-tag active" : "details-tag"} onClick={() => switchView('details')}>Details</h4></Col>
-        <Col md={6} className="d-flex align-items-center justify-content-center"><h4 className={activeSection === "reviews" ? "reviews-tag active" : "reviews-tag"} onClick={() => switchView('reviews')}>Reviews</h4></Col>
+        <Col md={6} className="d-flex align-items-center justify-content-center">
+          <h4
+            className={activeSection === 'details' ? 'details-tag active' : 'details-tag'}
+            onClick={() => switchView('details')}
+          >
+            Details
+          </h4>
+        </Col>
+        <Col md={6} className="d-flex align-items-center justify-content-center">
+          <h4
+            className={activeSection === 'reviews' ? 'reviews-tag active' : 'reviews-tag'}
+            onClick={() => switchView('reviews')}
+          >
+            Reviews
+          </h4>
+        </Col>
       </Row>
-      <hr/>
-      {activeSection === "details" ? (
+      <hr />
+      {activeSection === 'details' ? (
         <Row>
           <Col md={6}>
             <h5 className="details-header">Description:</h5>
@@ -147,17 +188,17 @@ function Product() {
       ) : (
         <Row>
           <Col md={12}>
-          <div className="review-container-wrapper">
-      <ReviewContainer reviews={reviews} />
-    </div>
-    <div className="review-form-wrapper">
-      <ReviewForm product={product} />
-    </div>
+            <div className="review-container-wrapper">
+              <ReviewContainer reviews={reviews} />
+            </div>
+            <div className="review-form-wrapper">
+              <ReviewForm product={product} />
+            </div>
           </Col>
         </Row>
       )}
     </Container>
-  )
+  );
 }
 
-export default Product
+export default Product;
