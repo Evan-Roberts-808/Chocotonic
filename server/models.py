@@ -180,7 +180,8 @@ class Product(db.Model, SerializerMixin):
     cart_items = db.relationship("Cart_Item", back_populates="product")
 
     # Serialize Rules
-    serialize_rules = ("-category", "-order_items", "-reviews", "-cart_items")
+    serialize_rules = ("-order_items", "-reviews",
+                       "-cart_items", "category.name", "category.id", '-category.products')
 
 
 class Category(db.Model, SerializerMixin):
@@ -213,12 +214,6 @@ class Review(db.Model, SerializerMixin):
         if not rating or rating < 0 or rating > 5:
             raise ValueError(' Invalid rating value, must be between 0 and 5')
         return rating
-
-    @validates('review_text')
-    def validate_review_text(self, key, review_text):
-        if not review_text.strip():
-            raise ValueError('Invalid review')
-        return review_text
 
 
 class Cart(db.Model, SerializerMixin):
