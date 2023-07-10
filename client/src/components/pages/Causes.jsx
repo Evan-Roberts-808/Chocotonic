@@ -20,22 +20,25 @@ function Causes() {
         </div>
       </Row>
       <Row>
-        <div className="about-jumbotron jumbotron-fluid">
+        <div className="causes-jumbotron jumbotron-fluid">
           <Container>
-            <div className="jumbotron-content">
-              <p className="jumbotron-text">
-                We are dedicated to making a positive impact through our
-                commitment to various causes. Our passion for social
-                responsibility drives us to support meaningful initiatives that
-                address pressing social issues. Through our partnerships with
-                charitable organizations, we strive to create positive change
-                and uplift communities in need. By aligning our values with
-                causes that promote education, healthcare, poverty alleviation,
-                and social equality, we aim to make a difference in the lives of
-                individuals and contribute to a better world. Together, we can
-                build a brighter future and empower those who need it most.
-              </p>
-            </div>
+            <Row className="justify-content-end">
+              <Col className="jumbotron-content" xs={12} md={6}>
+                <p className="jumbotron-text">
+                  We are dedicated to making a positive impact through our
+                  commitment to various causes. Our passion for social
+                  responsibility drives us to support meaningful initiatives
+                  that address pressing social issues. Through our partnerships
+                  with charitable organizations, we strive to create positive
+                  change and uplift communities in need. By aligning our values
+                  with causes that promote education, healthcare, poverty
+                  alleviation, and social equality, we aim to make a difference
+                  in the lives of individuals and contribute to a better world.
+                  Together, we can build a brighter future and empower those who
+                  need it most.
+                </p>
+              </Col>
+            </Row>
           </Container>
         </div>
       </Row>

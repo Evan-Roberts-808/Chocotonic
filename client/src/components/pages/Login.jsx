@@ -37,11 +37,8 @@ function Login() {
 
   return (
     <>
-      <Row>
-        <Col
-          md={8}
-          className="d-flex justify-content-center align-items-center"
-        >
+      <Container>
+        <Row>
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
@@ -82,11 +79,17 @@ function Login() {
               </button>
             </Form>
           </Formik>
-        </Col>
-        <Col md={4}>
-          <div className="login-side-bar"></div>
-        </Col>
-      </Row>
+          <p>
+            Don't have an account?
+            <span
+              style={{ cursor: "pointer", "margin-left": "10px" }}
+              onClick={() => navigate("/signup")}
+            >
+              Sign Up
+            </span>
+          </p>
+        </Row>
+      </Container>
     </>
   );
 }

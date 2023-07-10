@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Arvo:wght@400;700&family=Poppins:wght@400;500;700&display=swap');
+
 :root{
     --chocotonic-green: #317d4f;
     --chocotonic-green-hover: #24673f;
@@ -6,6 +8,21 @@
 }
 
 /* General */
+
+* {
+  font-family: 'Poppins', sans-serif;
+}
+
+.arvo {
+  font-family: 'Arvo', serif;
+  color: #fff;
+}
+
+.arvo-bold {
+  font-family: 'Arvo', serif;
+  font-weight: 700;
+  color: #fff;
+}
 
 html, body {
     height: 100%;
@@ -18,10 +35,21 @@ body {
     background-color: var(--light-mode);
 }
 
-.App {
-    min-height: 100vh;
-    width: 100vw;
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
 
+.content-container {
+  flex-grow: 1;
+  /* Add margin or padding to create space */
+  margin-bottom: 20px; /* Example: 20px of space */
+}
+
+.separation {
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .custom-btn-primary {
@@ -76,16 +104,31 @@ body {
 
   /* Home */
 
-  .jumbotron {
-    width: 100%;
-    height: 50vh;
-    background-image: url('https://dummyimage.com/2000x1000/bababa/000000.png&text=jumbotron');
-    background-size: cover;
+  .home-jumbotron {
+    width: 100vw;
+    height: 60vh;
+    background-color: #95b492;
+    background-image: url('https://raw.githubusercontent.com/Evan-Roberts-808/Chocotonic/main/.github/images/site-images/home-jumbo.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
     display: flex;
     flex-direction: column;
     text-align: center;
     justify-content: center;
     align-items: center;
+  }
+
+.card {position: relative;}
+
+.custom-overlay {
+  top: auto;
+  background-color: var(--chocotonic-green);
+  padding: 5px;
+}
+
+.row {
+  --bs-gutter-x: 0;
 }
 
   /* Footer */
@@ -146,6 +189,15 @@ body {
     margin-top: 20px;
     margin-bottom: 20px;
     border-radius: 20px;
+  }
+
+  .signup-image {
+    height: 900px;
+    transform: scaleX(-1)
+  }
+
+  .signup-side-bar {
+    z-index: 3;
   }
 
   /* Shop Pages */
@@ -327,11 +379,35 @@ body {
   text-align: center;
   margin-top: 20px;
   margin-bottom: 20px;
+  margin-right: 20px;
 }
 
 .about-jumbotron {
   position: relative;
-  background-image: url("https://dummyimage.com/2000x1000/bababa/000000.png&text=jumbotron");
+  height: 60vh;
+  background-image: url("https://raw.githubusercontent.com/Evan-Roberts-808/Chocotonic/main/.github/images/site-images/about-us-jumbo.png");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sustainability-jumbotron {
+  position: relative;
+  height: 60vh;
+  background-image: url("https://raw.githubusercontent.com/Evan-Roberts-808/Chocotonic/main/.github/images/site-images/sustainability-jumbo.png");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.causes-jumbotron {
+  position: relative;
+  height: 60vh;
+  background-image: url("https://raw.githubusercontent.com/Evan-Roberts-808/Chocotonic/main/.github/images/site-images/causes-jumbo.png");
   background-size: cover;
   background-position: center;
   display: flex;
@@ -340,12 +416,12 @@ body {
 }
 
 .jumbotron-content {
-  width: 40%;
+  width: 30%;
+  padding-left: 40px;
 }
 
 .jumbotron-text {
-  color: #fff;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  color: #000;
   font-weight: 500;
 }
 
