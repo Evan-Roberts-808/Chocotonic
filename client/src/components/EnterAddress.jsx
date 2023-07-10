@@ -1,20 +1,19 @@
-import React, { useContext, useEffect, useState } from 'react';
-import UserContext from '../context/UserContext';
-import { Formik, Field, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
-import { Button, Card, Form } from 'react-bootstrap';
+import React, { useContext, useEffect, useState } from "react";
+import UserContext from "../context/UserContext";
+import { Formik, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
+import { Button, Card, Form } from "react-bootstrap";
 
 function EnterAddress({ onNext }) {
   const { user } = useContext(UserContext);
   const [addressDetails, setAddressDetails] = useState(null);
   const [useAddressOnRecord, setUseAddressOnRecord] = useState(false);
-  console.log(addressDetails);
 
   const addressValidationSchema = Yup.object().shape({
-    address_line1: Yup.string().required('Address Line 1 is required'),
-    city: Yup.string().required('City is required'),
-    state: Yup.string().required('State is required'),
-    postal_code: Yup.string().required('Postal Code is required'),
+    address_line_1: Yup.string().required("Address Line 1 is required"),
+    city: Yup.string().required("City is required"),
+    state: Yup.string().required("State is required"),
+    postal_code: Yup.string().required("Postal Code is required"),
   });
 
   useEffect(() => {
@@ -26,7 +25,7 @@ function EnterAddress({ onNext }) {
           } else if (response.status === 404) {
             return [];
           } else {
-            throw new Error('Error fetching address details');
+            throw new Error("Error fetching address details");
           }
         })
         .then((addresses) => {
@@ -39,26 +38,19 @@ function EnterAddress({ onNext }) {
   }, [user]);
 
   const handleNext = (values) => {
-    const addressData = {
-      address_line1: values.addressLine1,
-      address_line2: values.addressLine2,
-      city: values.city,
-      state: values.state,
-      postal_code: values.postalCode,
-    };
 
-    fetch(`/api/address/${user.id}`, {
-      method: 'POST',
+    fetch(`/api/addresses/${user.id}`, {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(addressData),
+      body: JSON.stringify(values),
     })
       .then((response) => {
         if (response.ok) {
           return response.json();
         } else {
-          throw new Error('Error saving payment details');
+          throw new Error("Error saving payment details");
         }
       })
       .then((newPaymentInfo) => {
@@ -87,7 +79,8 @@ function EnterAddress({ onNext }) {
                 </Card.Title>
                 <Card.Text>
                   {address.city}, {address.state}, {address.postal_code}
-                  <p>Address Type: {address.type}</p>
+                  <br/>
+                  Address Type: {address.type}
                 </Card.Text>
               </Card.Body>
             </Card>
@@ -106,8 +99,9 @@ function EnterAddress({ onNext }) {
           </Button>
         </div>
       )}
-      {!useAddressOnRecord && (!addressDetails || addressDetails.length === 0) && (
-        <Formik
+      {!useAddressOnRecord &&
+        (!addressDetails || addressDetails.length === 0) && (
+          <Formik
             initialValues={{
               address_line_1: "",
               address_line_2: "",
@@ -119,8 +113,8 @@ function EnterAddress({ onNext }) {
             validationSchema={addressValidationSchema}
             onSubmit={handleNext}
           >
-            {({ handleNext }) => (
-              <Form onSubmit={handleNext}>
+            {({ handleSubmit }) => (
+              <Form onSubmit={handleSubmit}>
                 <Form.Group
                   controlId="address_line_1"
                   className="address-form-input"
@@ -255,9 +249,9 @@ function EnterAddress({ onNext }) {
               </Form>
             )}
           </Formik>
-      )}
+        )}
 
-      {useAddressOnRecord && ( 
+      {useAddressOnRecord && (
         <Formik
             initialValues={{
               address_line_1: "",
@@ -270,8 +264,8 @@ function EnterAddress({ onNext }) {
             validationSchema={addressValidationSchema}
             onSubmit={handleNext}
           >
-            {({ handleNext }) => (
-              <Form onSubmit={handleNext}>
+            {({ handleSubmit }) => (
+              <Form onSubmit={handleSubmit}>
                 <Form.Group
                   controlId="address_line_1"
                   className="address-form-input"
@@ -408,7 +402,7 @@ function EnterAddress({ onNext }) {
           </Formik>
       )}
     </div>
-  )
+  );
 }
 
-export default EnterAddress
+export default EnterAddress;

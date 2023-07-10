@@ -3,10 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { Row, Col, Container } from "react-bootstrap";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import UserContext from '../../context/UserContext'
+import UserContext from "../../context/UserContext";
 
 function Login() {
-  const { setUser } = useContext(UserContext)
+  const { setUser } = useContext(UserContext);
   const navigate = useNavigate();
 
   const initialValues = {
@@ -38,7 +38,10 @@ function Login() {
   return (
     <>
       <Row>
-        <Col md={8} className="d-flex justify-content-center align-items-center">
+        <Col
+          md={8}
+          className="d-flex justify-content-center align-items-center"
+        >
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
@@ -85,7 +88,7 @@ function Login() {
         </Col>
       </Row>
     </>
-  )
+  );
 }
 
-export default Login
+export default Login;

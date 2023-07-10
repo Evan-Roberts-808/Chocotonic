@@ -5,10 +5,11 @@ import * as Yup from "yup";
 import UserContext from "../context/UserContext";
 
 function PaymentDetails() {
-
   const { user } = useContext(UserContext);
   const [paymentDetails, setPaymentDetails] = useState([]);
   const [showAddPaymentForm, setShowAddPaymentForm] = useState(false);
+  const [selectedPaymentId, setSelectedPaymentId] = useState(null);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   useEffect(() => {
     fetch(`/api/payments/${user.id}`)
@@ -34,45 +35,109 @@ function PaymentDetails() {
   };
 
   const handleFormSubmit = (values) => {
-    console.log(values);
-
-    fetch(`/api/payments/${user.id}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(values),
-    })
-      .then((response) => {
-        if (response.ok) {
-          setPaymentDetails((prevPaymentDetails) => [
-            ...prevPaymentDetails,
-            values,
-          ]);
-          setShowAddPaymentForm(false);
-        } else {
-          throw new Error("Error saving payment details");
-        }
+    if (selectedPaymentId) {
+      fetch(`/api/payments/${user.id}/${selectedPaymentId}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
       })
-      .catch((error) => {
-        console.error(error);
-      });
+        .then((response) => {
+          if (response.ok) {
+            setPaymentDetails((prevPaymentDetails) =>
+              prevPaymentDetails.map((payment) =>
+                payment.id === selectedPaymentId
+                  ? { ...payment, ...values }
+                  : payment
+              )
+            );
+            setShowAddPaymentForm(false);
+          } else {
+            throw new Error("Error saving payment details");
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    } else {
+      fetch(`/api/payments/${user.id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      })
+        .then((response) => {
+          if (response.ok) {
+            setPaymentDetails((prevPaymentDetails) => [
+              ...prevPaymentDetails,
+              values,
+            ]);
+            setShowAddPaymentForm(false);
+          } else {
+            throw new Error("Error saving payment details");
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  };
+
+  const handleConfirmDelete = () => {
+    if (selectedPaymentId) {
+      fetch(`/api/payments/${user.id}/${selectedPaymentId}`, {
+        method: "DELETE",
+      })
+        .then((response) => {
+          if (response.ok) {
+            setPaymentDetails((prevPaymentDetails) =>
+              prevPaymentDetails.filter(
+                (payment) => payment.id !== selectedPaymentId
+              )
+            );
+            setSelectedPaymentId(null);
+            setShowDeleteModal(false);
+          } else {
+            throw new Error("Error deleting payment details");
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  };
+
+  const handleCancelDelete = () => {
+    setSelectedPaymentId(null);
+    setShowDeleteModal(false);
   };
 
   const paymentValidationSchema = Yup.object().shape({
     cardholder_name: Yup.string().required("Cardholder name is required"),
     card_number: Yup.string().required("Card number is required"),
     expiration_month: Yup.number()
-    .required("Expiration month is required")
-    .min(1, "Invalid month")
-    .max(12, "Invalid month"),
-  expiration_year: Yup.number()
-    .required("Expiration year is required")
-    .min(new Date().getFullYear(), "Invalid year"),
-  cvv: Yup.string()
-    .required("CVV is required")
-    .matches(/^\d{3}$/, "Invalid CVV"),
+      .required("Expiration month is required")
+      .min(1, "Invalid month")
+      .max(12, "Invalid month"),
+    expiration_year: Yup.number()
+      .required("Expiration year is required")
+      .min(new Date().getFullYear(), "Invalid year"),
+    cvv: Yup.string()
+      .required("CVV is required")
+      .matches(/^\d{3}$/, "Invalid CVV"),
   });
+
+  const handleEditPayment = (paymentId) => {
+    setSelectedPaymentId(paymentId);
+    setShowAddPaymentForm(true);
+  };
+
+  const handleDeletePayment = (paymentId) => {
+    setSelectedPaymentId(paymentId);
+    setShowDeleteModal(true);
+  };
 
   return (
     <Container>
@@ -101,10 +166,33 @@ function PaymentDetails() {
                   Card Number ending in: ****
                   {paymentMethod.card_number.slice(-4)}
                 </Card.Text>
+                <Button
+                  className="custom-btn-primary"
+                  onClick={() => handleEditPayment(paymentMethod.id)}
+                >
+                  Edit
+                </Button>
+                <Button
+                  className="custom-btn-primary"
+                  onClick={() => handleDeletePayment(paymentMethod.id)}
+                >
+                  Delete
+                </Button>
               </Card.Body>
             </Card>
           ))}
         </Row>
+      )}
+      {showDeleteModal && (
+        <div>
+          <p>Are you sure you want to delete this payment?</p>
+          <Button className="custom-btn-primary" onClick={handleConfirmDelete}>
+            Confirm
+          </Button>
+          <Button className="custom-btn-primary" onClick={handleCancelDelete}>
+            Cancel
+          </Button>
+        </div>
       )}
       {showAddPaymentForm && (
         <Row>

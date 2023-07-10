@@ -1,4 +1,5 @@
 from flask_migrate import Migrate
+from sqlalchemy import func
 from flask import Flask, request, session, make_response, jsonify, redirect
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from flask_bcrypt import generate_password_hash
@@ -288,6 +289,33 @@ class UserPaymentById(Resource):
             return {"error": "An error occurred while fetching the payment details"}, 500
 
     @login_required
+    def patch(self, user_id, payment_id):
+        try:
+            user_payment = Payment_Detail.query.filter_by(
+                user_id=user_id, id=payment_id).first()
+            if not user_payment:
+                return {"error": "Payment details not found"}, 404
+
+            data = request.get_json()
+            for key, value in data.items():
+                setattr(user_payment, key, value)
+
+            db.session.commit()
+
+            payment_info = {
+                "id": user_payment.id,
+                "card_number": user_payment.card_number,
+                "cardholder_name": user_payment.cardholder_name,
+                "expiration_month": user_payment.expiration_month,
+                "expiration_year": user_payment.expiration_year,
+                "cvv": user_payment.cvv
+            }
+
+            return payment_info, 200
+        except:
+            return {"error": "An error occurred while updating the payment details"}, 500
+
+    @login_required
     def delete(self, user_id, payment_id):
         try:
             user_payment = Payment_Detail.query.filter_by(
@@ -331,7 +359,6 @@ class UserAddress(Resource):
             address = Address(
                 user_id=user_id,
                 address_line_1=data.get('address_line_1'),
-                # Use empty string as default
                 address_line_2=data.get('address_line_2', ''),
                 city=data.get('city'),
                 state=data.get('state'),
@@ -602,15 +629,14 @@ class Checkout(Resource):
     @login_required
     def post(self):
         try:
-            # Get the user's cart
             cart = Cart.query.filter_by(user_id=current_user.id).first()
             if cart:
-                # Calculate the total price
                 total_price = 0.0
                 for cart_item in cart.cart_items:
                     total_price += cart_item.product.price * cart_item.quantity
-
-                # Create a new order
+                    product = Product.query.filter_by(id=cart_item.product_id).first()
+                    product.quantity -= cart_item.quantity
+                    db.session.add(product)
                 order = Order(
                     user_id=current_user.id,
                     total_price=total_price,
@@ -619,7 +645,6 @@ class Checkout(Resource):
                 db.session.add(order)
                 db.session.flush()
 
-                # Iterate over cart items and add them to the order
                 for cart_item in cart.cart_items:
                     order_item = OrderItem(
                         order_id=order.id,
@@ -629,17 +654,16 @@ class Checkout(Resource):
                     )
                     db.session.add(order_item)
 
-                # Clear the user's cart
                 cart.cart_items.clear()
 
-                # Commit the changes
                 db.session.commit()
 
                 return {'message': 'Order placed successfully'}, 200
             else:
                 return {'error': 'Cart not found'}, 404
         except Exception as e:
-            traceback.print_exc()  # Print the traceback for detailed error information
+            traceback.print_exc() 
+            db.session.rollback()  
             return {'error': 'An error occurred while placing the order', 'details': str(e)}, 500
 
 

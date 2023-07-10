@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Row, Col, Container} from "react-bootstrap";
-import ProductCards from '../ProductCards.jsx'
+import { Row, Col, Container } from "react-bootstrap";
+import ProductCards from "../ProductCards.jsx";
 
 function ShopByCategory() {
-
-  const { id } = useParams()
-  const [products, setProducts] = useState([])
+  const { id } = useParams();
+  const [products, setProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [selectedChocolateType, setSelectedChocolateType] = useState("");
@@ -14,16 +13,15 @@ function ShopByCategory() {
   const [isFetching, setIsFetching] = useState(true);
 
   useEffect(() => {
-
     setIsFetching(true);
 
     fetch(`/api/products/category/${id}`)
-    .then((r) => r.json())
-    .then((products) => {
-      setProducts(products)
-      setIsFetching(false)
-    })
-  }, [id])
+      .then((r) => r.json())
+      .then((products) => {
+        setProducts(products);
+        setIsFetching(false);
+      });
+  }, [id]);
 
   const filterProducts = () => {
     let filtered = [...products];
@@ -53,12 +51,7 @@ function ShopByCategory() {
 
   useEffect(() => {
     filterProducts();
-  }, [
-    products,
-    searchQuery,
-    selectedChocolateType,
-    selectedPriceRange,
-  ]);
+  }, [products, searchQuery, selectedChocolateType, selectedPriceRange]);
 
   const handleChocolateTypeChange = (chocolateType) => {
     setSelectedChocolateType(
@@ -73,11 +66,14 @@ function ShopByCategory() {
   return (
     <Container>
       <Row>
-      <Col md={8}>
-      {isFetching ? (
+        <Col md={8}>
+          {isFetching ? (
             <p>Loading...</p>
           ) : (
-            <ProductCards products={filteredProducts} searchQuery={searchQuery} />
+            <ProductCards
+              products={filteredProducts}
+              searchQuery={searchQuery}
+            />
           )}
         </Col>
         <Col md={4}>
@@ -185,4 +181,4 @@ function ShopByCategory() {
   );
 }
 
-export default ShopByCategory
+export default ShopByCategory;

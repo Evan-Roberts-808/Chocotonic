@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
-import { Card, Pagination } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import React, { useState, useContext } from "react";
+import UserContext from "../context/UserContext";
+import { Card, Pagination } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 function ProductCards({ products, searchQuery }) {
+  const { user } = useContext(UserContext);
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 9;
   const paginationRange = 2;
@@ -22,21 +24,21 @@ function ProductCards({ products, searchQuery }) {
   const addToCart = (product, quantity) => {
     const data = {
       product_id: product.id,
-      quantity: quantity
+      quantity: quantity,
     };
 
-    fetch('/api/carts', {
-      method: 'POST',
+    fetch("/api/carts", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
     })
       .then((response) => {
         if (response.ok) {
-          console.log('Item added to cart');
+          console.log("Item added to cart");
         } else {
-          throw new Error('Error adding item to cart');
+          throw new Error("Error adding item to cart");
         }
       })
       .catch((error) => {
@@ -87,7 +89,11 @@ function ProductCards({ products, searchQuery }) {
     let ellipsisDisplayed = false;
 
     for (let i = 2; i <= totalPages; i++) {
-      if (i === currentPage || (i >= currentPage - paginationRange && i <= currentPage + paginationRange)) {
+      if (
+        i === currentPage ||
+        (i >= currentPage - paginationRange &&
+          i <= currentPage + paginationRange)
+      ) {
         paginationItems.push(
           <Pagination.Item
             key={i}
@@ -129,7 +135,7 @@ function ProductCards({ products, searchQuery }) {
     );
 
     return paginationItems;
-  }
+  };
 
   return (
     <div>
@@ -146,26 +152,30 @@ function ProductCards({ products, searchQuery }) {
               <Card.Body>
                 <Link
                   to={url}
-                  style={{ textDecoration: 'none', color: '#000' }}
+                  style={{ textDecoration: "none", color: "#000" }}
                 >
                   <Card.Subtitle>{product.name}</Card.Subtitle>
                 </Link>
                 <hr />
                 <Card.Subtitle>${product.price}</Card.Subtitle>
-                <div className="d-flex justify-content-center align-items-center">
-                <input
-                  type="number"
-                  style={{ width: '35px', marginRight: '10px' }}
-                  value={quantity}
-                  onChange={(event) => handleQuantityChange(index, event)}
-                />
-                <button
-                  className="add-to-cart"
-                  onClick={() => addToCart(product, quantity)}
-                >
-                  Add to Cart
-                </button>
-                </div>
+                {user ? (
+                  <div className="d-flex justify-content-center align-items-center">
+                    <input
+                      type="number"
+                      style={{ width: "35px", marginRight: "10px" }}
+                      value={quantity}
+                      onChange={(event) => handleQuantityChange(index, event)}
+                    />
+                    <button
+                      className="add-to-cart"
+                      onClick={() => addToCart(product, quantity)}
+                    >
+                      Add to Cart
+                    </button>
+                  </div>
+                ) : (
+                  <></>
+                )}
               </Card.Body>
             </Card>
           );

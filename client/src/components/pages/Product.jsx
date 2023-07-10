@@ -1,15 +1,18 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { useParams } from 'react-router-dom';
-import { Row, Col, Container, Carousel, Button } from 'react-bootstrap';
-import ReviewContainer from '../ReviewContainer.jsx';
-import ReviewForm from '../ReviewForm.jsx';
+import React, { useState, useEffect, useContext } from "react";
+import UserContext from "../../context/UserContext";
+import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { Row, Col, Container, Carousel, Button } from "react-bootstrap";
+import ReviewContainer from "../ReviewContainer.jsx";
+import ReviewForm from "../ReviewForm.jsx";
 
 function Product() {
   const { id } = useParams();
+  const { user } = useContext(UserContext);
   const [product, setProduct] = useState(null);
   const [images, setImages] = useState([]);
   const [quantity, setQuantity] = useState(1);
-  const [activeSection, setActiveSection] = useState('details');
+  const [activeSection, setActiveSection] = useState("details");
   const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
@@ -19,7 +22,7 @@ function Product() {
         setProduct(productData);
       })
       .catch((error) => {
-        console.error('Error fetching product data:', error);
+        console.error("Error fetching product data:", error);
       });
   }, [id]);
 
@@ -70,7 +73,7 @@ function Product() {
 
   const calculateAverageRating = () => {
     if (reviews.length === 0) {
-      return 'No Ratings Yet';
+      return "No Ratings Yet";
     }
 
     const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
@@ -86,18 +89,18 @@ function Product() {
       quantity: quantity,
     };
 
-    fetch('/api/carts', {
-      method: 'POST',
+    fetch("/api/carts", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
     })
       .then((response) => {
         if (response.ok) {
-          console.log('Item added to cart');
+          console.log("Item added to cart");
         } else {
-          throw new Error('Error adding item to cart');
+          throw new Error("Error adding item to cart");
         }
       })
       .catch((error) => {
@@ -113,7 +116,11 @@ function Product() {
             <Carousel className="product-carousel" interval={null}>
               {images.map((image, index) => (
                 <Carousel.Item key={index}>
-                  <img src={image} alt={`Image ${index}`} className="carousel-image" />
+                  <img
+                    src={image}
+                    alt={`Image ${index}`}
+                    className="carousel-image"
+                  />
                 </Carousel.Item>
               ))}
             </Carousel>
@@ -126,51 +133,71 @@ function Product() {
             <h3>{product.name}</h3>
             <h5>${product.price}</h5>
             <p>
-              <span className="rating">Rating: {calculateAverageRating()}</span> |
-              <span className="total-reviews">Total Reviews: {totalReviews}</span>
+              <span className="rating">Rating: {calculateAverageRating()}</span>{" "}
+              |
+              <span className="total-reviews">
+                Total Reviews: {totalReviews}
+              </span>
             </p>
-            <div className="quantity-cart-buttons">
-              <Button
-                className="quantity-button custom-btn-primary"
-                onClick={handleQuantityDecrement}
-              >
-                -
-              </Button>
-              <span className="quantity-value">{quantity}</span>
-              <Button
-                className="quantity-button custom-btn-primary"
-                onClick={handleQuantityIncrement}
-              >
-                +
-              </Button>
-              <Button className="add-to-cart-button custom-btn-primary" onClick={addToCart}>
-                Add to Cart
-              </Button>
-            </div>
+            {user ? (
+              <div className="quantity-cart-buttons">
+                <Button
+                  className="quantity-button custom-btn-primary"
+                  onClick={handleQuantityDecrement}
+                >
+                  -
+                </Button>
+                <span className="quantity-value">{quantity}</span>
+                <Button
+                  className="quantity-button custom-btn-primary"
+                  onClick={handleQuantityIncrement}
+                >
+                  +
+                </Button>
+                <Button
+                  className="add-to-cart-button custom-btn-primary"
+                  onClick={addToCart}
+                >
+                  Add to Cart
+                </Button>
+              </div>
+            ) : (
+              <></>
+            )}
           </div>
         </Col>
       </Row>
       <hr />
       <Row>
-        <Col md={6} className="d-flex align-items-center justify-content-center">
+        <Col
+          md={6}
+          className="d-flex align-items-center justify-content-center"
+        >
           <h4
-            className={activeSection === 'details' ? 'details-tag active' : 'details-tag'}
-            onClick={() => switchView('details')}
+            className={
+              activeSection === "details" ? "details-tag active" : "details-tag"
+            }
+            onClick={() => switchView("details")}
           >
             Details
           </h4>
         </Col>
-        <Col md={6} className="d-flex align-items-center justify-content-center">
+        <Col
+          md={6}
+          className="d-flex align-items-center justify-content-center"
+        >
           <h4
-            className={activeSection === 'reviews' ? 'reviews-tag active' : 'reviews-tag'}
-            onClick={() => switchView('reviews')}
+            className={
+              activeSection === "reviews" ? "reviews-tag active" : "reviews-tag"
+            }
+            onClick={() => switchView("reviews")}
           >
             Reviews
           </h4>
         </Col>
       </Row>
       <hr />
-      {activeSection === 'details' ? (
+      {activeSection === "details" ? (
         <Row>
           <Col md={6}>
             <h5 className="details-header">Description:</h5>
@@ -191,8 +218,15 @@ function Product() {
             <div className="review-container-wrapper">
               <ReviewContainer reviews={reviews} />
             </div>
+            <hr />
             <div className="review-form-wrapper">
-              <ReviewForm product={product} />
+              {user ? (
+                <ReviewForm product={product} />
+              ) : (
+                <h5>
+                  Please <Link to="/login">sign in</Link> to leave a review
+                </h5>
+              )}
             </div>
           </Col>
         </Row>

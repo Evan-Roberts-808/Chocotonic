@@ -10,7 +10,11 @@ function Home() {
         <div>
           <h4>Shop By Category</h4>
           <Row>
-            <Card className="bg-dark text-white col-sm-3" as={Link} to={'/shop'}>
+            <Card
+              className="bg-dark text-white col-sm-3"
+              as={Link}
+              to={"/shop"}
+            >
               <Card.Img
                 src="https://dummyimage.com/750x500/bababa/000000.png&text=shop+all"
                 alt="Card image"
@@ -19,7 +23,11 @@ function Home() {
                 <Card.Title>Shop All</Card.Title>
               </Card.ImgOverlay>
             </Card>
-            <Card className="bg-dark text-white col-sm-3 offset-1" as={Link} to={'/shop/6'}>
+            <Card
+              className="bg-dark text-white col-sm-3 offset-1"
+              as={Link}
+              to={"/shop/6"}
+            >
               <Card.Img
                 src="https://dummyimage.com/750x500/bababa/000000.png&text=chocolate+truffles"
                 alt="Card image"
@@ -28,7 +36,11 @@ function Home() {
                 <Card.Title>Chocolate Truffles</Card.Title>
               </Card.ImgOverlay>
             </Card>
-            <Card className="bg-dark text-white col-sm-3 offset-1" as={Link} to={'/shop/5'}>
+            <Card
+              className="bg-dark text-white col-sm-3 offset-1"
+              as={Link}
+              to={"/shop/5"}
+            >
               <Card.Img
                 src="https://dummyimage.com/750x500/bababa/000000.png&text=hot+chocolate"
                 alt="Card image"
@@ -42,7 +54,11 @@ function Home() {
         <div>
           <h4>Discover More</h4>
           <Row>
-            <Card className="bg-dark text-white col-sm-3" as={Link} to={'/about'}>
+            <Card
+              className="bg-dark text-white col-sm-3"
+              as={Link}
+              to={"/about"}
+            >
               <Card.Img
                 src="https://dummyimage.com/750x500/bababa/000000.png&text=about+us"
                 alt="Card image"
@@ -51,7 +67,11 @@ function Home() {
                 <Card.Title>About Us</Card.Title>
               </Card.ImgOverlay>
             </Card>
-            <Card className="bg-dark text-white col-sm-3 offset-1"  as={Link} to={'/sustainability'}>
+            <Card
+              className="bg-dark text-white col-sm-3 offset-1"
+              as={Link}
+              to={"/sustainability"}
+            >
               <Card.Img
                 src="https://dummyimage.com/750x500/bababa/000000.png&text=sustainability"
                 alt="Card image"
@@ -60,7 +80,11 @@ function Home() {
                 <Card.Title>Sustainability</Card.Title>
               </Card.ImgOverlay>
             </Card>
-            <Card className="bg-dark text-white col-sm-3 offset-1"  as={Link} to={'/causes'}>
+            <Card
+              className="bg-dark text-white col-sm-3 offset-1"
+              as={Link}
+              to={"/causes"}
+            >
               <Card.Img
                 src="https://dummyimage.com/750x500/bababa/000000.png&text=causes"
                 alt="Card image"
