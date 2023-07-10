@@ -8,6 +8,8 @@ function Address() {
   const { user } = useContext(UserContext);
   const [addressDetails, setAddressDetails] = useState([]);
   const [showAddAddressForm, setShowAddAddressForm] = useState(false);
+  const [selectedAddressId, setSelectedAddressId] = useState(null);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   useEffect(() => {
     fetch(`/api/addresses/${user.id}`)
@@ -32,30 +34,94 @@ function Address() {
     setShowAddAddressForm(true);
   };
 
-  const handleFormSubmit = (values) => {
-    console.log(values);
+  const handleEditAddress = (addressId) => {
+    setSelectedAddressId(addressId);
+    setShowAddAddressForm(true);
+  };
 
-    fetch(`/api/addresses/${user.id}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(values),
-    })
-      .then((response) => {
-        if (response.ok) {
-          setAddressDetails((prevAddressDetails) => [
-            ...prevAddressDetails,
-            values,
-          ]);
-          setShowAddAddressForm(false);
-        } else {
-          throw new Error("Error saving address details");
-        }
+  const handleDeleteAddress = (addressId) => {
+    setSelectedAddressId(addressId);
+    setShowDeleteModal(true);
+  };
+
+  const handleCancelDelete = () => {
+    setSelectedAddressId(null);
+    setShowDeleteModal(false);
+  };
+
+  const handleFormSubmit = (values) => {
+    if (selectedAddressId) {
+      fetch(`/api/addresses/${user.id}/${selectedAddressId}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
       })
-      .catch((error) => {
-        console.error(error);
-      });
+        .then((response) => {
+          if (response.ok) {
+            setAddressDetails((prevAddressDetails) =>
+              prevAddressDetails.map((address) =>
+                address.id === selectedAddressId
+                  ? { ...address, ...values }
+                  : address
+              )
+            );
+            setShowAddAddressForm(false);
+          } else {
+            throw new Error("Error saving address");
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    } else {
+      fetch(`/api/addresses/${user.id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      })
+        .then((response) => {
+          if (response.ok) {
+            setAddressDetails((prevAddressDetails) => [
+              ...prevAddressDetails,
+              values,
+            ]);
+            setShowAddAddressForm(false);
+          } else {
+            throw new Error("Error saving address details");
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  };
+
+  const handleConfirmDelete = () => {
+    if (selectedAddressId) {
+      fetch(`/api/addresses/${user.id}/${selectedAddressId}`, {
+        method: "DELETE",
+      })
+        .then((response) => {
+          if (response.ok) {
+            setAddressDetails((prevAddressDetails) =>
+              prevAddressDetails.filter(
+                (address) => address.id !== selectedAddressId
+              )
+            );
+            setSelectedAddressId(null);
+            setShowDeleteModal(false);
+          } else {
+            throw new Error("Error deleting address");
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
   };
 
   const addressValidationSchema = Yup.object().shape({
@@ -68,7 +134,7 @@ function Address() {
 
   return (
     <Container>
-      {addressDetails.length === 0 ? (
+      {addressDetails && addressDetails.length === 0 ? (
         <Row>
           <p>
             No addresses on record. Add an address?{" "}
@@ -88,15 +154,42 @@ function Address() {
           {addressDetails.map((address) => (
             <Card key={address.id} className="col-sm-4">
               <Card.Body>
-                <Card.Title>{address.address_line1}{address.address_line2}</Card.Title>
+                <Card.Title>
+                  {address.address_line1}
+                  {address.address_line2}
+                </Card.Title>
                 <Card.Text>
                   {address.city}, {address.state}, {address.postal_code}
-                  <p>Address Type: {address.type}</p>
+                  <br />
+                  Address Type: {address.type}
                 </Card.Text>
+                <Button
+                  className="custom-btn-primary"
+                  onClick={() => handleEditAddress(address.id)}
+                >
+                  Edit
+                </Button>
+                <Button
+                  className="custom-btn-primary"
+                  onClick={() => handleDeleteAddress(address.id)}
+                >
+                  Delete
+                </Button>
               </Card.Body>
             </Card>
           ))}
         </Row>
+      )}
+      {showDeleteModal && (
+        <div>
+          <p>Are you sure you want to delete this address?</p>
+          <Button className="custom-btn-primary" onClick={handleConfirmDelete}>
+            Confirm
+          </Button>
+          <Button className="custom-btn-primary" onClick={handleCancelDelete}>
+            Cancel
+          </Button>
+        </div>
       )}
       {showAddAddressForm && (
         <Row>
@@ -199,8 +292,6 @@ function Address() {
                     <option value="WV">West Virginia</option>
                     <option value="WI">Wisconsin</option>
                     <option value="WY">Wyoming</option>
-
-
                   </Field>
                   <ErrorMessage
                     name="state"
@@ -227,7 +318,11 @@ function Address() {
                   className="address-form-input"
                 >
                   <Form.Label>Address Type</Form.Label>
-                  <Field as="select" name="address_type" className="form-control">
+                  <Field
+                    as="select"
+                    name="address_type"
+                    className="form-control"
+                  >
                     <option value="">Select an address type</option>
                     <option value="billing">Billing</option>
                     <option value="shipping">Shipping</option>

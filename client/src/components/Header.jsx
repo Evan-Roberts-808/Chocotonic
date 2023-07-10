@@ -40,7 +40,7 @@ function Header() {
         method: "POST",
         credentials: "same-origin",
       });
-      setUser(null); 
+      setUser(null);
     } catch (error) {
       console.log(error);
     }
@@ -70,16 +70,28 @@ function Header() {
                   onMouseEnter={handleMouseEnterShop}
                   onMouseLeave={handleMouseLeaveShop}
                 >
-                  <NavDropdown.Item as={Link} to="/shop">Shop All</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/shop">
+                    Shop All
+                  </NavDropdown.Item>
                   <NavDropdown.Divider />
                   <div className="category-label">
                     <span>Shop by Category</span>
                   </div>
-                  <NavDropdown.Item as={Link} to="/shop/1">Chocolate Bars</NavDropdown.Item>
-                  <NavDropdown.Item as={Link} to="/shop/2">Chocolate Bells</NavDropdown.Item>
-                  <NavDropdown.Item as={Link} to="/shop/4">Chocolate Squares</NavDropdown.Item>
-                  <NavDropdown.Item as={Link} to="/shop/5">Hot Chocolate</NavDropdown.Item>
-                  <NavDropdown.Item as={Link} to="/shop/6">Chocolate Truffles</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/shop/1">
+                    Chocolate Bars
+                  </NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/shop/2">
+                    Chocolate Bells
+                  </NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/shop/4">
+                    Chocolate Squares
+                  </NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/shop/5">
+                    Hot Chocolate
+                  </NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/shop/6">
+                    Chocolate Truffles
+                  </NavDropdown.Item>
                 </NavDropdown>
                 <NavDropdown
                   title="About Us"
@@ -88,9 +100,15 @@ function Header() {
                   onMouseEnter={handleMouseEnterAbout}
                   onMouseLeave={handleMouseLeaveAbout}
                 >
-                  <NavDropdown.Item as={Link} to="/about">About Us</NavDropdown.Item>
-                  <NavDropdown.Item as={Link} to="/sustainability">Sustainability</NavDropdown.Item>
-                  <NavDropdown.Item as={Link} to="/causes">Causes</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/about">
+                    About Us
+                  </NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/sustainability">
+                    Sustainability
+                  </NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/causes">
+                    Causes
+                  </NavDropdown.Item>
                 </NavDropdown>
                 <NavDropdown
                   title="Profile"
@@ -99,14 +117,16 @@ function Header() {
                   onMouseEnter={handleMouseEnterProfile}
                   onMouseLeave={handleMouseLeaveProfile}
                 >
-                  <NavDropdown.Item as={Link} to={'/profile-details'}>View Profile</NavDropdown.Item>
-                  <NavDropdown.Item onClick={handleLogout} as={Link} to={'/'}>
+                  <NavDropdown.Item as={Link} to={"/profile-details"}>
+                    View Profile
+                  </NavDropdown.Item>
+                  <NavDropdown.Item onClick={handleLogout} as={Link} to={"/"}>
                     Logout
                   </NavDropdown.Item>
                 </NavDropdown>
               </Nav>
             </Navbar.Collapse>
-            <Link to={'/cart'}>
+            <Link to={"/cart"}>
               <div className="shopping-cart-container">
                 <AiOutlineShoppingCart className="shopping-cart" />
               </div>
@@ -133,16 +153,28 @@ function Header() {
                   onMouseEnter={handleMouseEnterShop}
                   onMouseLeave={handleMouseLeaveShop}
                 >
-                  <NavDropdown.Item as={Link} to="/shop">Shop All</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/shop">
+                    Shop All
+                  </NavDropdown.Item>
                   <NavDropdown.Divider />
                   <div className="category-label">
                     <span>Shop by Category</span>
                   </div>
-                  <NavDropdown.Item as={Link} to="/shop/1">Chocolate Bars</NavDropdown.Item>
-                  <NavDropdown.Item as={Link} to="/shop/2">Chocolate Bells</NavDropdown.Item>
-                  <NavDropdown.Item as={Link} to="/shop/4">Chocolate Squares</NavDropdown.Item>
-                  <NavDropdown.Item as={Link} to="/shop/5">Hot Chocolate</NavDropdown.Item>
-                  <NavDropdown.Item as={Link} to="/shop/6">Chocolate Truffles</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/shop/1">
+                    Chocolate Bars
+                  </NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/shop/2">
+                    Chocolate Bells
+                  </NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/shop/4">
+                    Chocolate Squares
+                  </NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/shop/5">
+                    Hot Chocolate
+                  </NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/shop/6">
+                    Chocolate Truffles
+                  </NavDropdown.Item>
                 </NavDropdown>
                 <NavDropdown
                   title="About Us"
@@ -151,9 +183,15 @@ function Header() {
                   onMouseEnter={handleMouseEnterAbout}
                   onMouseLeave={handleMouseLeaveAbout}
                 >
-                  <NavDropdown.Item as={Link} to="/about">About Us</NavDropdown.Item>
-                  <NavDropdown.Item as={Link} to="/sustainability">Sustainability</NavDropdown.Item>
-                  <NavDropdown.Item as={Link} to="/causes">Causes</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/about">
+                    About Us
+                  </NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/sustainability">
+                    Sustainability
+                  </NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/causes">
+                    Causes
+                  </NavDropdown.Item>
                 </NavDropdown>
                 <Nav.Link as={Link} to="/signup">
                   Sign Up

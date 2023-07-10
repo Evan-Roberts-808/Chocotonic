@@ -1,9 +1,9 @@
-import React, { useEffect, useState, useContext } from 'react';
-import UserContext from '../context/UserContext';
-import { Formik, Field, ErrorMessage } from 'formik';
-import {Card} from 'react-bootstrap'
-import * as Yup from 'yup';
-import { Button, Form } from 'react-bootstrap';
+import React, { useEffect, useState, useContext } from "react";
+import UserContext from "../context/UserContext";
+import { Formik, Field, ErrorMessage } from "formik";
+import { Card } from "react-bootstrap";
+import * as Yup from "yup";
+import { Button, Form } from "react-bootstrap";
 
 function EnterPayment({ onNext }) {
   const { user } = useContext(UserContext);
@@ -14,15 +14,15 @@ function EnterPayment({ onNext }) {
     cardholder_name: Yup.string().required("Cardholder name is required"),
     card_number: Yup.string().required("Card number is required"),
     expiration_month: Yup.number()
-    .required("Expiration month is required")
-    .min(1, "Invalid month")
-    .max(12, "Invalid month"),
+      .required("Expiration month is required")
+      .min(1, "Invalid month")
+      .max(12, "Invalid month"),
     expiration_year: Yup.number()
-    .required("Expiration year is required")
-    .min(new Date().getFullYear(), "Invalid year"),
+      .required("Expiration year is required")
+      .min(new Date().getFullYear(), "Invalid year"),
     cvv: Yup.string()
-    .required("CVV is required")
-    .matches(/^\d{3}$/, "Invalid CVV"),
+      .required("CVV is required")
+      .matches(/^\d{3}$/, "Invalid CVV"),
   });
 
   useEffect(() => {
@@ -34,7 +34,7 @@ function EnterPayment({ onNext }) {
           } else if (response.status === 404) {
             return [];
           } else {
-            throw new Error('Error fetching payment details');
+            throw new Error("Error fetching payment details");
           }
         })
         .then((payments) => {
@@ -47,26 +47,19 @@ function EnterPayment({ onNext }) {
   }, [user]);
 
   const handleNext = (values) => {
-    const paymentData = {
-      card_number: values.cardNumber,
-      cardholder_name: values.cardholderName,
-      expiration_month: values.expirationMonth,
-      expiration_year: values.expirationYear,
-      cvv: values.cvv,
-    };
-  
+
     fetch(`/api/payments/${user.id}`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(paymentData),
+      body: JSON.stringify(values),
     })
       .then((response) => {
         if (response.ok) {
           return response.json();
         } else {
-          throw new Error('Error saving payment details');
+          throw new Error("Error saving payment details");
         }
       })
       .then((newPaymentInfo) => {
@@ -82,8 +75,7 @@ function EnterPayment({ onNext }) {
   }
 
   return (
-
-<div>
+    <div>
       {!useCardOnRecord && paymentDetails && paymentDetails.length > 0 && (
         <div>
           <p>Would you like to use a card on record?</p>
@@ -98,10 +90,16 @@ function EnterPayment({ onNext }) {
               </Card.Body>
             </Card>
           ))}
-          <Button className="custom-btn-primary checkout-button use-card" onClick={() => onNext()}>
+          <Button
+            className="custom-btn-primary checkout-button use-card"
+            onClick={() => onNext()}
+          >
             Use Card on Record
           </Button>
-          <Button className="custom-btn-primary checkout-button" onClick={() => setUseCardOnRecord(true)}>
+          <Button
+            className="custom-btn-primary checkout-button"
+            onClick={() => setUseCardOnRecord(true)}
+          >
             Enter New Payment
           </Button>
         </div>
@@ -118,8 +116,8 @@ function EnterPayment({ onNext }) {
             validationSchema={paymentValidationSchema}
             onSubmit={handleNext}
           >
-            {({ handleNext }) => (
-              <Form onSubmit={handleNext}>
+            {({ handleSubmit }) => (
+              <Form onSubmit={handleSubmit}>
                 <Form.Group
                   controlId="cardholder_name"
                   className="payment-form-input"
@@ -223,8 +221,8 @@ function EnterPayment({ onNext }) {
             validationSchema={paymentValidationSchema}
             onSubmit={handleNext}
           >
-            {({ handleNext }) => (
-              <Form onNext={handleNext}>
+            {({ handleSubmit }) => (
+              <Form onSubmit={handleSubmit}>
                 <Form.Group
                   controlId="cardholder_name"
                   className="payment-form-input"

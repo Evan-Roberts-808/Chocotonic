@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Card, Pagination } from 'react-bootstrap';
+import React, { useState } from "react";
+import { Card, Pagination } from "react-bootstrap";
 
 function ReviewContainer({ reviews }) {
   const [currentPage, setCurrentPage] = useState(1);
@@ -15,12 +15,12 @@ function ReviewContainer({ reviews }) {
   };
 
   const reviewsList = currentReviews.map((review) => {
-    console.log(review)
+    console.log(review);
     const date = new Date(review.created_at);
-    const formattedDate = date.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
+    const formattedDate = date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
     });
 
     return (

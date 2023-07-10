@@ -39,6 +39,7 @@ body {
   --bs-btn-disabled-color: #fff;
   --bs-btn-disabled-bg: var(--chocotonic-green-hover);
   --bs-btn-disabled-border-color: var(--chocotonic-green-hover);
+  margin-right: 10px;
 }
 
 /* Header */
@@ -350,7 +351,7 @@ body {
 
 /* Profile Page */
 
-.payment-click, .address-click {
+.payment-click, .address-click, .edit-click {
   font-weight: 700;
   cursor: pointer;
 }
@@ -371,6 +372,23 @@ input:focus {
 th {
   background-color: var(--chocotonic-green) !important;
   color:#fff !important;
+}
+
+.user-delete {
+  width: 20%;
+  margin-right: 20px;
+}
+
+.edit-form {
+    width: 30%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.cancel-order {
+  width: 20%;
 }
 
 /* Cart */
