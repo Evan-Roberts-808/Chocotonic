@@ -36,9 +36,10 @@ function App() {
 
   return (
     <UserContext.Provider value={{user, setUser}}>
-    <div className="App">
+    <div className="app-container">
     <Router>
       <Header />
+      <div className="content-container">
       <Routes>
         <Route path="/" index element={<Home />} />
         <Route path="/login" element={<Login />} />
@@ -54,6 +55,7 @@ function App() {
         <Route path="/order/:order_id" element={<OrderById />} />
         <Route path="/profile-details" element={<ProfileDetails />} />
       </Routes>
+      </div>
       <Footer />
     </Router>
     </div>

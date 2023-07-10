@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { Row, Col, Container } from "react-bootstrap";
+import { Row, Col, Container, Image } from "react-bootstrap";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import UserContext from "../../context/UserContext";
@@ -45,11 +45,8 @@ function Signup() {
 
   return (
     <>
-      <Row>
-        <Col
-          md={8}
-          className="d-flex justify-content-center align-items-center"
-        >
+      <Container>
+        <Row>
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
@@ -132,11 +129,17 @@ function Signup() {
               </button>
             </Form>
           </Formik>
-        </Col>
-        <Col md={4}>
-          <div className="signup-side-bar"></div>
-        </Col>
-      </Row>
+          <p>
+            Already a user?
+            <span
+              style={{ cursor: "pointer", "margin-left": "10px" }}
+              onClick={() => navigate("/login")}
+            >
+              Sign In
+            </span>
+          </p>
+        </Row>
+      </Container>
     </>
   );
 }
