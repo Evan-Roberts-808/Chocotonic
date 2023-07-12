@@ -3,6 +3,44 @@ import UserContext from "../../context/UserContext";
 import { Container, Table, Row, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
+function EditableQuantityField({ productId, quantity, onSave }) {
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedQuantity, setEditedQuantity] = useState(quantity);
+
+  const handleSaveClick = () => {
+    setIsEditing(false);
+    onSave(productId, editedQuantity);
+  };
+
+  return (
+    <>
+      {isEditing ? (
+        <>
+          <input
+            type="number"
+            value={editedQuantity}
+            onChange={(e) => setEditedQuantity(e.target.value)}
+          />
+          <Button className="custom-btn-primary" onClick={handleSaveClick}>
+            Save
+          </Button>
+        </>
+      ) : (
+        <>
+          {quantity}
+          <Button
+            className="custom-btn-primary"
+            style={{marginLeft: '20px'}}
+            onClick={() => setIsEditing(true)}
+          >
+            Edit
+          </Button>
+        </>
+      )}
+    </>
+  );
+}
+
 function Cart() {
   const { user } = useContext(UserContext);
   const [cart, setCart] = useState(null);
@@ -31,12 +69,10 @@ function Cart() {
         <tr key={item.item_id}>
           <td>{item.product_name}</td>
           <td>
-            <input
-              type="number"
-              value={item.quantity}
-              onChange={(e) =>
-                handleQuantityChange(item.product_id, e.target.value)
-              }
+            <EditableQuantityField
+              productId={item.product_id}
+              quantity={item.quantity}
+              onSave={handleQuantityChange}
             />
           </td>
           <td>

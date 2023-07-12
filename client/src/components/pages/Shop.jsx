@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Container } from "react-bootstrap";
+import { Row, Col, Container, Button } from "react-bootstrap";
 import ProductCards from "../ProductCards.jsx";
 
 function Shop() {
@@ -21,6 +21,7 @@ function Shop() {
         console.error("Error fetching products:", error);
       });
   }, []);
+
 
   const filterProducts = () => {
     let filtered = [...products];

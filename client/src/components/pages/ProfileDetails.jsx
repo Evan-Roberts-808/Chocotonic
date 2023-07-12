@@ -77,7 +77,7 @@ function ProfileDetails() {
       <tr key={order.order_id}>
         <td>{order.order_id}</td>
         <td>{formattedDate}</td>
-        <td>${order.total_price}</td>
+        <td>${order.total_price.toFixed(2)}</td>
         <td>{order.status}</td>
         <td>
           <Link to={`/order/${order.order_id}`}>View Details</Link>

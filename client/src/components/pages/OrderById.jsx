@@ -77,7 +77,7 @@ function OrderById() {
             <tr>
               <td></td>
               <td></td>
-              <td>Total: ${order.total_price}</td>
+              <td>Total: ${order.total_price.toFixed(2)}</td>
             </tr>
           </tbody>
         </Table>

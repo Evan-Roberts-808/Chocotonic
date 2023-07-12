@@ -3,7 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { Button } from "react-bootstrap";
 import * as Yup from "yup";
 
-function ReviewForm({ product }) {
+function ReviewForm({ product, onAdd }) {
   const initialValues = {
     rating: 0,
     review_text: "",
@@ -25,12 +25,9 @@ function ReviewForm({ product }) {
       },
       body: JSON.stringify(values),
     })
-      .then((response) => {
-        if (response.ok) {
-          console.log("Review posted successfully");
-        } else {
-          throw new Error("Error posting review");
-        }
+      .then(r => r.json())
+      .then((newReviw) => {
+        onAdd(newReviw)
       })
       .catch((error) => {
         console.error("Error posting review:", error);
