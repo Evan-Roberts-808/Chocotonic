@@ -58,10 +58,14 @@ function OrderById() {
     );
   });
 
+  const backToProfile = () => {
+    navigate("/profile-details")
+  }
+
   return (
     <Container>
       <Row>
-        <h3>Order: {order_id}</h3>
+        <h3>Order: {order_id}</h3> <p>Return to profile? <span onClick={backToProfile} style={{cursor:'pointer'}}><b>Click Here</b></span></p>
       </Row>
       <Row>
         <Table striped bordered hover>
