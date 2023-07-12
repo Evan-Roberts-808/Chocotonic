@@ -116,7 +116,7 @@ function PaymentDetails() {
 
   const paymentValidationSchema = Yup.object().shape({
     cardholder_name: Yup.string().required("Cardholder name is required"),
-    card_number: Yup.string().required("Card number is required"),
+    card_number: Yup.string().required("Card number is required").length(16, "Card number must be exactly 16 characters"),
     expiration_month: Yup.number()
       .required("Expiration month is required")
       .min(1, "Invalid month")

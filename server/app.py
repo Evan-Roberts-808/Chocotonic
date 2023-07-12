@@ -634,7 +634,8 @@ class Checkout(Resource):
                 total_price = 0.0
                 for cart_item in cart.cart_items:
                     total_price += cart_item.product.price * cart_item.quantity
-                    product = Product.query.filter_by(id=cart_item.product_id).first()
+                    product = Product.query.filter_by(
+                        id=cart_item.product_id).first()
                     product.quantity -= cart_item.quantity
                     db.session.add(product)
                 order = Order(
@@ -662,8 +663,8 @@ class Checkout(Resource):
             else:
                 return {'error': 'Cart not found'}, 404
         except Exception as e:
-            traceback.print_exc() 
-            db.session.rollback()  
+            traceback.print_exc()
+            db.session.rollback()
             return {'error': 'An error occurred while placing the order', 'details': str(e)}, 500
 
 

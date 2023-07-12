@@ -16,7 +16,7 @@ function ConfirmOrder() {
     })
       .then((response) => {
         if (response.ok) {
-          navigate("/");
+          navigate("/profile-details");
         } else {
           throw new Error("Error confirming the order");
         }
