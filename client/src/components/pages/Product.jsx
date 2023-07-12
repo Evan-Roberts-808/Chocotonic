@@ -108,6 +108,10 @@ function Product() {
       });
   };
 
+  const handleNewReview = (newReview) => {
+    setReviews((prevReviews) => [...prevReviews, newReview])
+  }
+
   return (
     <Container>
       <Row>
@@ -221,7 +225,7 @@ function Product() {
             <hr />
             <div className="review-form-wrapper">
               {user ? (
-                <ReviewForm product={product} />
+                <ReviewForm onAdd={handleNewReview} product={product} />
               ) : (
                 <h5>
                   Please <Link to="/login">sign in</Link> to leave a review

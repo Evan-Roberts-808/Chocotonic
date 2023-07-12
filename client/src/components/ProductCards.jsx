@@ -1,6 +1,6 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import UserContext from "../context/UserContext";
-import { Card, Pagination } from "react-bootstrap";
+import { Card, Pagination, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 function ProductCards({ products, searchQuery }) {
@@ -9,6 +9,7 @@ function ProductCards({ products, searchQuery }) {
   const productsPerPage = 9;
   const paginationRange = 2;
   const [quantities, setQuantities] = useState([]);
+  const [cartItems, setCartItems] = useState([]);
 
   const filteredProducts = products.filter((product) =>
     product.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -20,6 +21,24 @@ function ProductCards({ products, searchQuery }) {
     indexOfFirstProduct,
     indexOfLastProduct
   );
+
+  useEffect(() => {
+    fetch("/api/carts")
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error("Error fetching cart items");
+        }
+      })
+      .then((cart) => {
+        const productIds = cart.items.map((item) => item.product_id);
+        setCartItems(productIds);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }, []);
 
   const addToCart = (product, quantity) => {
     const data = {
@@ -37,6 +56,7 @@ function ProductCards({ products, searchQuery }) {
       .then((response) => {
         if (response.ok) {
           console.log("Item added to cart");
+          setCartItems((prevCartItems) => [...prevCartItems, product.id]);
         } else {
           throw new Error("Error adding item to cart");
         }
@@ -58,6 +78,32 @@ function ProductCards({ products, searchQuery }) {
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
     window.scrollTo(0, 0);
+  };
+
+  const isInCart = (productId) => {
+    return cartItems.includes(productId);
+  };
+
+  const renderAddToCartButton = (product, index) => {
+    const quantity = quantities[index] || 1;
+
+    if (isInCart(product.id)) {
+      return <Button className="add-to-cart" disabled style={{ backgroundColor: '#599872', borderColor: '#599872' ,cursor: 'not-allowed' }}>In Cart</Button>;
+    } else {
+      return (
+        <>                    
+        <input
+        type="number"
+        style={{ width: "35px", marginRight: "10px" }}
+        value={quantity}
+        onChange={(event) => handleQuantityChange(index, event)}
+        />
+        <Button className="add-to-cart" onClick={() => addToCart(product, quantity)}>
+          Add to Cart
+        </Button>
+        </>
+      );
+    }
   };
 
   const totalPages = Math.ceil(products.length / productsPerPage);
@@ -160,18 +206,7 @@ function ProductCards({ products, searchQuery }) {
                 <Card.Subtitle>${product.price}</Card.Subtitle>
                 {user ? (
                   <div className="d-flex justify-content-center align-items-center">
-                    <input
-                      type="number"
-                      style={{ width: "35px", marginRight: "10px" }}
-                      value={quantity}
-                      onChange={(event) => handleQuantityChange(index, event)}
-                    />
-                    <button
-                      className="add-to-cart"
-                      onClick={() => addToCart(product, quantity)}
-                    >
-                      Add to Cart
-                    </button>
+                    {renderAddToCartButton(product, index)}
                   </div>
                 ) : (
                   <></>

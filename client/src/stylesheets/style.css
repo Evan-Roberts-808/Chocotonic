@@ -5,21 +5,23 @@
     --chocotonic-green-hover: #24673f;
     --chocotonic-grey: #d2d3d4;
     --light-mode: #EFEFEF;
+    --poppins: 'Poppins', sans-serif
+    --arvo: 'Arvo', serif;
 }
 
 /* General */
 
 * {
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--poppins);
 }
 
 .arvo {
-  font-family: 'Arvo', serif;
+  font-family: var(--arvo);
   color: #fff;
 }
 
 .arvo-bold {
-  font-family: 'Arvo', serif;
+  font-family: var(--arvo);
   font-weight: 700;
   color: #fff;
 }
