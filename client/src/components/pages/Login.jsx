@@ -8,6 +8,7 @@ import UserContext from "../../context/UserContext";
 function Login() {
   const { setUser } = useContext(UserContext);
   const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState("");
 
   const initialValues = {
     identifier: "",
@@ -27,13 +28,25 @@ function Login() {
       },
       body: JSON.stringify(values),
     })
-      .then((r) => r.json())
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else if (response.status === 401) {
+          throw new Error("Invalid username/email or password");
+        } else if (response.status === 404) {
+          throw new Error("User not found");
+        } else {
+          throw new Error("Error logging in");
+        }
+      })
       .then((user) => {
-        console.log(user)
         setUser(user);
         navigate("/");
       })
-      .catch((err) => console.error(err));
+      .catch((error) => {
+        console.error(error);
+        setErrorMessage(error.message);
+      });
   };
 
   return (
@@ -47,6 +60,9 @@ function Login() {
           >
             <Form className="login-form">
               <h3>Login</h3>
+              {errorMessage && (
+              <div className="error-message">{errorMessage}</div>
+            )}
               <div className="form-group">
                 <label htmlFor="identifier">Username or Email:</label>
                 <Field
@@ -86,7 +102,7 @@ function Login() {
               style={{ cursor: "pointer", "margin-left": "10px" }}
               onClick={() => navigate("/signup")}
             >
-              Sign Up
+              <b>Sign Up</b>
             </span>
           </p>
         </Row>

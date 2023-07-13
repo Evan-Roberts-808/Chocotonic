@@ -62,7 +62,7 @@ function Footer() {
                 Shop
               </h6>
               <p>
-                <a href="#!" className="text-reset">
+                <a href="#!" className="footer-link">
                   Shop All
                 </a>
               </p>
@@ -70,27 +70,27 @@ function Footer() {
                 Shop By Category
               </h6>
               <p>
-                <a href="#!" className="text-reset">
+                <a href="#!" className="footer-link">
                   Chocolate Bars
                 </a>
               </p>
               <p>
-                <a href="#!" className="text-reset">
+                <a href="#!" className="footer-link">
                   Chocolate Bells
                 </a>
               </p>
               <p>
-                <a href="#!" className="text-reset">
+                <a href="#!" className="footer-link">
                   Chocolate Squares
                 </a>
               </p>
               <p>
-                <a href="#!" className="text-reset">
+                <a href="#!" className="footer-link">
                   Hot Chocolate
                 </a>
               </p>
               <p>
-                <a href="#!" className="text-reset">
+                <a href="#!" className="footer-link">
                   Chocolate Truffles
                 </a>
               </p>
@@ -101,17 +101,17 @@ function Footer() {
                 About
               </h6>
               <p>
-                <a href="#!" className="text-reset">
+                <a href="#!" className="footer-link">
                   About Us
                 </a>
               </p>
               <p>
-                <a href="#!" className="text-reset">
+                <a href="#!" className="footer-link">
                   Sustainability
                 </a>
               </p>
               <p>
-                <a href="#!" className="text-reset">
+                <a href="#!" className="footer-link">
                   Causes
                 </a>
               </p>
