@@ -88,19 +88,34 @@ function ProductCards({ products, searchQuery }) {
     const quantity = quantities[index] || 1;
 
     if (isInCart(product.id)) {
-      return <Button className="add-to-cart" disabled style={{ backgroundColor: '#599872', borderColor: '#599872' ,cursor: 'not-allowed' }}>In Cart</Button>;
+      return (
+        <Button
+          className="add-to-cart"
+          disabled
+          style={{
+            backgroundColor: "#599872",
+            borderColor: "#599872",
+            cursor: "not-allowed",
+          }}
+        >
+          In Cart
+        </Button>
+      );
     } else {
       return (
-        <>                    
-        <input
-        type="number"
-        style={{ width: "35px", marginRight: "10px" }}
-        value={quantity}
-        onChange={(event) => handleQuantityChange(index, event)}
-        />
-        <Button className="add-to-cart" onClick={() => addToCart(product, quantity)}>
-          Add to Cart
-        </Button>
+        <>
+          <input
+            type="number"
+            style={{ width: "35px", marginRight: "10px" }}
+            value={quantity}
+            onChange={(event) => handleQuantityChange(index, event)}
+          />
+          <Button
+            className="add-to-cart"
+            onClick={() => addToCart(product, quantity)}
+          >
+            Add to Cart
+          </Button>
         </>
       );
     }
@@ -185,34 +200,36 @@ function ProductCards({ products, searchQuery }) {
 
   return (
     <div>
-      <div className="row justify-content-center">
+      <div className="row">
         {currentProducts.map((product, index) => {
           const url = `/product/${product.id}`;
           const quantity = quantities[index] || 1;
 
           return (
-            <Card className="col-sm-3 product-cards" key={product.id}>
-              <Link to={url}>
-                <Card.Img variant="top" src={product.image_1} />
-              </Link>
-              <Card.Body>
-                <Link
-                  to={url}
-                  style={{ textDecoration: "none", color: "#000" }}
-                >
-                  <Card.Subtitle>{product.name}</Card.Subtitle>
-                </Link>
-                <hr />
-                <Card.Subtitle>${product.price}</Card.Subtitle>
-                {user ? (
-                  <div className="d-flex justify-content-center align-items-center">
-                    {renderAddToCartButton(product, index)}
+            <div className="row mb-3" key={product.id}>
+              <div className="col">
+                <Card>
+                  <div className="row g-0">
+                    <div className="col-sm-3 d-flex align-items-center">
+                      <Card.Img src={product.image_1} className="mx-auto" />
+                    </div>
+                    <div className="col-sm-8 align-items-center">
+                      <div className="card-body">
+                        <h5 className="card-title">{product.name}</h5>
+                        <p className="card-text">${product.price}</p>
+                        {user ? (
+                          <div className="d-flex align-items-center">
+                            {renderAddToCartButton(product, index)}
+                          </div>
+                        ) : (
+                          <></>
+                        )}
+                      </div>
+                    </div>
                   </div>
-                ) : (
-                  <></>
-                )}
-              </Card.Body>
-            </Card>
+                </Card>
+              </div>
+            </div>
           );
         })}
       </div>

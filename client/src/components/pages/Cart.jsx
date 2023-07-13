@@ -26,7 +26,7 @@ function EditableQuantityField({ productId, quantity, onSave }) {
           </Button>
         </>
       ) : (
-        <>
+        <div className="align-items-center d-flex">
           {quantity}
           <Button
             className="custom-btn-primary"
@@ -35,7 +35,7 @@ function EditableQuantityField({ productId, quantity, onSave }) {
           >
             Edit
           </Button>
-        </>
+        </div>
       )}
     </>
   );

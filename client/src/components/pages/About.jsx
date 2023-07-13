@@ -20,29 +20,30 @@ function About() {
         </div>
       </Row>
       <Row>
-        <div className="about-jumbotron jumbotron-fluid">
-          <Container>
-            <Row className="justify-content-end">
-              <Col className="jumbotron-content" xs={12} md={6}>
-                <p className="jumbotron-text">
-                  We are a chocolate company with a mission to make a positive
-                  impact on the environment and promote sustainability. Our
-                  passion for creating delicious chocolate treats goes hand in
-                  hand with our commitment to creating a brighter and greener
-                  future. With every bite of our chocolates, you not only
-                  indulge in heavenly flavors but also contribute to the
-                  well-being of our planet. A portion of our proceeds is donated
-                  to environmental and sustainability charities, supporting
-                  their important work in preserving our natural resources and
-                  promoting a sustainable lifestyle. Join us on this sweet
-                  journey and indulge in guilt-free chocolate that truly makes a
-                  difference.
-                </p>
-              </Col>
-            </Row>
-          </Container>
-        </div>
+  <div className="about-jumbotron jumbotron-fluid">
+    <Container>
+      <Row className="justify-content-sm-center justify-content-md-end">
+        <Col className="jumbotron-content" xs={12} md={8} lg={6}>
+          <div className='text-container'>
+          <p className="jumbotron-text">
+            We are a chocolate company with a mission to make a positive impact
+            on the environment and promote sustainability. Our passion for
+            creating delicious chocolate treats goes hand in hand with our
+            commitment to creating a brighter and greener future. With every
+            bite of our chocolates, you not only indulge in heavenly flavors
+            but also contribute to the well-being of our planet. A portion of
+            our proceeds is donated to environmental and sustainability
+            charities, supporting their important work in preserving our natural
+            resources and promoting a sustainable lifestyle. Join us on this
+            sweet journey and indulge in guilt-free chocolate that truly makes
+            a difference.
+          </p>
+          </div>
+        </Col>
       </Row>
+    </Container>
+  </div>
+</Row>
       <Container>
         <Row>
           <Col md={4}>

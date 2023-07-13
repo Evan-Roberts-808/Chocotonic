@@ -33,7 +33,7 @@ function Home() {
       <Container>
         <div className="separation">
           <h4>Shop By Category</h4>
-          <Row>
+          <Row className="home-row">
             <Card className="text-white col-sm-3" as={Link} to={"/shop"}>
               <Card.Img
                 src="https://raw.githubusercontent.com/Evan-Roberts-808/Chocotonic/main/.github/images/site-images/shop-all.png"
@@ -46,7 +46,7 @@ function Home() {
               </Card.ImgOverlay>
             </Card>
             <Card
-              className="text-white col-sm-3 offset-1"
+              className="text-white col-sm-3offset-sm-0 col-md-3 offset-md-1"
               as={Link}
               to={"/shop/6"}
             >
@@ -60,7 +60,7 @@ function Home() {
               </Card.ImgOverlay>
             </Card>
             <Card
-              className="text-white col-sm-3 offset-1"
+              className="text-white col-sm-3offset-sm-0 col-md-3 offset-md-1"
               as={Link}
               to={"/shop/5"}
             >
@@ -77,7 +77,7 @@ function Home() {
         </div>
         <div className="separation">
           <h4>Discover More</h4>
-          <Row>
+          <Row className="home-row">
             <Card className="text-white col-sm-3" as={Link} to={"/about"}>
               <Card.Img
                 src="https://raw.githubusercontent.com/Evan-Roberts-808/Chocotonic/main/.github/images/site-images/about-us-thumb.png"
@@ -89,7 +89,7 @@ function Home() {
               </Card.ImgOverlay>
             </Card>
             <Card
-              className="text-white col-sm-3 offset-1"
+              className="text-white col-sm-3offset-sm-0 col-md-3 offset-md-1"
               as={Link}
               to={"/sustainability"}
             >
@@ -103,7 +103,7 @@ function Home() {
               </Card.ImgOverlay>
             </Card>
             <Card
-              className="text-white col-sm-3 offset-1"
+              className="text-white col-sm-3offset-sm-0 col-md-3 offset-md-1"
               as={Link}
               to={"/causes"}
             >

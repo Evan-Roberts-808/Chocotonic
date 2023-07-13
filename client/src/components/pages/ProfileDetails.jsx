@@ -88,7 +88,7 @@ function ProfileDetails() {
 
   return (
     <Container>
-      <Row>
+      <Row className="separation">
         <h3>My Account</h3>
         <h5>Hello, {name}</h5>
         <p>
@@ -175,19 +175,20 @@ function ProfileDetails() {
           </p>
         )}
       </Row>
-      <Row>
+      <Row className="separation">
         <h4>Payment Details</h4>
         <hr />
         <PaymentDetails />
       </Row>
-      <Row>
+      <Row className="separation">
         <h4>Addresses</h4>
         <hr />
         <Address />
       </Row>
-      <Row>
+      <Row className="separation">
         <h3>Order History</h3>
         <hr />
+        <div className="reble-responsive">
         <Table striped bordered hover>
           <thead>
             <tr>
@@ -200,8 +201,9 @@ function ProfileDetails() {
           </thead>
           <tbody>{orderData}</tbody>
         </Table>
+        </div>
       </Row>
-      <Row>
+      <Row className="separation">
         <h3>Danger Zone</h3>
         <hr />
         {showConfirmation ? (
