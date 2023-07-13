@@ -99,7 +99,7 @@ function Login() {
           <p>
             Don't have an account?
             <span
-              style={{ cursor: "pointer", "margin-left": "10px" }}
+              style={{ cursor: "pointer", "marginLeft": "10px" }}
               onClick={() => navigate("/signup")}
             >
               <b>Sign Up</b>
