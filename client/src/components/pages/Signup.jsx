@@ -132,7 +132,7 @@ function Signup() {
           <p>
             Already a user?
             <span
-              style={{ cursor: "pointer", "margin-left": "10px" }}
+              style={{ cursor: "pointer", "marginLeft": "10px" }}
               onClick={() => navigate("/login")}
             >
               Sign In
