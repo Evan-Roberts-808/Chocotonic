@@ -153,6 +153,17 @@ body {
     background-color: var(--chocotonic-grey);
   }
 
+  .footer-link {
+    text-decoration: none;
+    transition: color 0.2s;
+    color: #515151
+  }
+
+  .footer-link:hover {
+    text-decoration: none;
+    color: var(--chocotonic-green-hover)
+  }
+
   .social-banner {
     border-bottom: 1px solid #b6b6b7;
   }

@@ -47,20 +47,23 @@ class Signup(Resource):
 class Login(Resource):
 
     def post(self):
-        data = request.get_json()
-        identifier = data.get('identifier')  # Can be email or username
-        password = data.get('password')
+        try:
+            data = request.get_json()
+            identifier = data.get('identifier')  # Can be email or username
+            password = data.get('password')
 
-        user = User.query.filter(
-            (User.email == identifier) | (User.username == identifier)
-        ).first()
+            user = User.query.filter(
+                (User.email == identifier) | (User.username == identifier)
+            ).first()
 
-        if user:
-            if user.authenticate(password):
-                login_user(user, remember=True)
-                return {'message': 'Login successful'}, 200
-
-        return {'error': '401 Unauthorized'}, 401
+            if user:
+                if user.authenticate(password):
+                    login_user(user, remember=True)
+                    return user.to_dict(), 200
+            if not user:
+                return {'error': '404 user not found'}, 404
+        except:
+            return {'error': '401 Unauthorized'}, 401
 
 
 @app.route("/logout", methods=["POST"])
