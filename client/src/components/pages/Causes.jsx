@@ -22,21 +22,23 @@ function Causes() {
       <Row>
         <div className="causes-jumbotron jumbotron-fluid">
           <Container>
-            <Row className="justify-content-end">
-              <Col className="jumbotron-content" xs={12} md={6}>
-                <p className="jumbotron-text">
-                  We are dedicated to making a positive impact through our
-                  commitment to various causes. Our passion for social
-                  responsibility drives us to support meaningful initiatives
-                  that address pressing social issues. Through our partnerships
-                  with charitable organizations, we strive to create positive
-                  change and uplift communities in need. By aligning our values
-                  with causes that promote education, healthcare, poverty
-                  alleviation, and social equality, we aim to make a difference
-                  in the lives of individuals and contribute to a better world.
-                  Together, we can build a brighter future and empower those who
-                  need it most.
-                </p>
+            <Row className="justify-content-sm-center justify-content-md-end">
+              <Col className="jumbotron-content" xs={12} md={8} lg={6}>
+                <div className="text-container">
+                  <p className="jumbotron-text">
+                    We are dedicated to making a positive impact through our
+                    commitment to various causes. Our passion for social
+                    responsibility drives us to support meaningful initiatives
+                    that address pressing social issues. Through our
+                    partnerships with charitable organizations, we strive to
+                    create positive change and uplift communities in need. By
+                    aligning our values with causes that promote education,
+                    healthcare, poverty alleviation, and social equality, we aim
+                    to make a difference in the lives of individuals and
+                    contribute to a better world. Together, we can build a
+                    brighter future and empower those who need it most.
+                  </p>
+                </div>
               </Col>
             </Row>
           </Container>

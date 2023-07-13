@@ -22,21 +22,24 @@ function Sustainability() {
       <Row>
         <div className="sustainability-jumbotron jumbotron-fluid">
           <Container>
-            <Row className="justify-content-end">
-              <Col className="jumbotron-content" xs={12} md={6}>
-                <p className="jumbotron-text">
-                  We are deeply committed to sustainability and environmental
-                  stewardship. We recognize the importance of preserving our
-                  planet for future generations and take proactive steps to
-                  minimize our ecological footprint. From sourcing ethically
-                  produced ingredients to implementing eco-friendly packaging
-                  solutions, we prioritize sustainable practices throughout our
-                  operations. We continuously strive to reduce waste, conserve
-                  energy, and support initiatives that promote environmental
-                  well-being. By choosing Chocotonic, you can indulge in our
-                  delectable chocolate treats while supporting a brand that is
-                  dedicated to creating a greener and more sustainable world.
-                </p>
+            <Row className="justify-content-sm-center justify-content-md-end">
+              <Col className="jumbotron-content" xs={12} md={8} lg={6}>
+                <div className="text-container">
+                  <p className="jumbotron-text">
+                    We are deeply committed to sustainability and environmental
+                    stewardship. We recognize the importance of preserving our
+                    planet for future generations and take proactive steps to
+                    minimize our ecological footprint. From sourcing ethically
+                    produced ingredients to implementing eco-friendly packaging
+                    solutions, we prioritize sustainable practices throughout
+                    our operations. We continuously strive to reduce waste,
+                    conserve energy, and support initiatives that promote
+                    environmental well-being. By choosing Chocotonic, you can
+                    indulge in our delectable chocolate treats while supporting
+                    a brand that is dedicated to creating a greener and more
+                    sustainable world.
+                  </p>
+                </div>
               </Col>
             </Row>
           </Container>

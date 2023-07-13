@@ -121,7 +121,9 @@ body {
     align-items: center;
   }
 
-.card {position: relative;}
+.card {
+  position: relative;
+}
 
 .custom-overlay {
   top: auto;
@@ -129,7 +131,7 @@ body {
   padding: 5px;
 }
 
-.row {
+.home-row {
   --bs-gutter-x: 0;
 }
 
@@ -489,4 +491,59 @@ th {
 
 .use-card {
   margin-right: 20px;
+}
+
+/* Media Query for Mobile Devices */
+@media (max-width: 480px) {
+  .navbar-toggler {
+    padding: 5px;
+  }
+
+  .navbar-brand {
+    margin-right: auto;
+  }
+
+  .home-jumbotron {
+    width: 100vw;
+    height: 30vh;
+    background-image: none;
+  }
+
+  .about-jumbotron {
+    background-image: url("https://raw.githubusercontent.com/Evan-Roberts-808/Chocotonic/main/.github/images/site-images/about-us-mobile.png");
+  }
+
+  .sustainability-jumbotron {
+    background-image: url("https://raw.githubusercontent.com/Evan-Roberts-808/Chocotonic/main/.github/images/site-images/sustainability-mobility.png")
+  }
+
+  .causes-jumbotron {
+    background-image: url("https://raw.githubusercontent.com/Evan-Roberts-808/Chocotonic/main/.github/images/site-images/causes-mobile.png")
+  }
+
+  .text-container {
+    width: 300px;
+    font-size: 14px;
+  }
+
+  .checkout-button {
+    width: 40%;
+  }
+
+  .payment-form-input {
+    width: 80%;
+  }
+
+  .address-form-input {
+    width: 80%;
+  }
+
+  .table-responsive {
+    overflow-x: auto;
+  }
+  .table {
+    width: 100%;
+    margin-bottom: 0;
+  }
+  
 }
