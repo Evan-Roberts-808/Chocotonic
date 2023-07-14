@@ -16,6 +16,14 @@ def view_pickle_structure(filename):
     print(data)
 
 
+def save_table_data_to_pickle(table_name):
+    table_data = db.session.query(table_name).all()
+    file_name = f"{table_name}.pickle"
+    with open(file_name, "wb") as file:
+        pickle.dump(table_data, file)
+    print(f"Table data for {table_name} saved to {file_name}.")
+
+
 def restore_categories():
 
     db.session.query(Category).delete()
@@ -180,8 +188,23 @@ def seed_orders():
     db.session.commit()
 
 
+def seed_order_status():
+    statuses = [
+
+    ]
+
+    for status in statuses:
+        new_status = Order_Status(name=status)
+        db.session.add(new_status)
+
+    db.session.commit()
+
+
 if __name__ == "__main__":
     with app.app_context():
+        # seed_order_status()
+        # save_table_data_to_pickle(Review)
+        # view_pickle_structure("<class 'models.Product'>.pickle")
         # seed_orders()
         # seed_reviews()
         # seed_users()

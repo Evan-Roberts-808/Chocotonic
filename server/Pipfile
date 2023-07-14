@@ -20,6 +20,8 @@ flask-session = "*"
 creditcard = "*"
 flask-login = "*"
 flask-bcrypt = "*"
+click = "*"
+rich = "*"
 
 [dev-packages]
 
