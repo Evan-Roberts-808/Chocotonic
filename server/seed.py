@@ -1,9 +1,13 @@
 from app import app
 from models import db, User, Payment_Detail, Address, Product, Category, Review, Cart, Cart_Item, Order, OrderItem, Order_Status
 import pickle
+from flask_bcrypt import Bcrypt
+import random
 import os
 import ipdb
 import json
+
+bcrypt = Bcrypt()
 
 
 def view_pickle_structure(filename):
@@ -55,8 +59,15 @@ def restore_products():
 
 
 def clear_tables():
-    db.session.query(User).delete()
-    db.session.query(Cart).delete()
+    # db.session.query(User).delete()
+    # db.session.query(Cart).delete()
+    # db.session.query(Review).delete()
+    db.session.query(Order).delete()
+    # db.session.query(Payment_Detail).delete()
+    # db.session.query(Address).delete()
+    # db.session.query(Cart_Item).delete()
+    db.session.query(OrderItem).delete()
+
     db.session.commit()
 
 
@@ -65,18 +76,115 @@ def add_http():
     for product in products:
         if product.image_1 and not product.image_1.startswith('https://'):
             product.image_1 = f"https://{product.image_1}"
-        
+
         if product.image_2 and not product.image_2.startswith('https://'):
             product.image_2 = f"https://{product.image_2}"
-        
+
         if product.image_3 and not product.image_3.startswith('https://'):
             product.image_3 = f"https://{product.image_3}"
         db.session.add(product)
     db.session.commit()
     pass
 
+
+def seed_users():
+    users = [
+
+    ]
+    for user_data in users:
+        try:
+            password_hash = bcrypt.generate_password_hash(
+                user_data['_password'])
+            user = User(
+                name=user_data['name'],
+                email=user_data['email'],
+                username=user_data['username'],
+            )
+            # Set the password hash using the setter
+            user.password_hash = password_hash.decode('utf-8')
+            db.session.add(user)
+        except KeyError as e:
+            print(f"KeyError: {e} not found in user_data: {user_data}")
+
+    db.session.commit()
+
+
+def seed_reviews():
+    reviews = [
+
+    ]
+
+    for review_data in reviews:
+        try:
+            # Create a new review object
+            review = Review(
+                product_id=review_data['product_id'],
+                user_id=review_data['user_id'],
+                rating=review_data['rating'],
+                review_text=review_data['review_text'],
+            )
+
+            # Add the review to the database session
+            db.session.add(review)
+        except KeyError as e:
+            print(f"KeyError: {e} not found in review_data: {review_data}")
+    db.session.commit()
+
+
+def seed_orders():
+    user_ids = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23,
+                24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42]  # List of user IDs
+
+    # Fetch existing products from the database
+    existing_products = Product.query.all()
+
+    for user_id in user_ids:
+        # Generate random number of orders per user
+        num_orders = random.randint(1, 5)
+
+        for _ in range(num_orders):
+            status_id = 1  # Set the status ID to a desired value
+
+            # Generate random number of order items per order
+            num_order_items = random.randint(1, 5)
+
+            order_items = []
+            total_price = 0.0
+
+            for _ in range(num_order_items):
+                # Select a random product from the existing products
+                product = random.choice(existing_products)
+                quantity = random.randint(1, 3)  # Generate random quantity
+                price = product.price * quantity
+                total_price += price
+
+                order_item = OrderItem(
+                    product_id=product.id,
+                    quantity=quantity,
+                    price=price
+                )
+                order_items.append(order_item)
+
+            order = Order(
+                user_id=user_id,
+                total_price=total_price,
+                status_id=status_id
+            )
+            db.session.add(order)
+            db.session.flush()  # Flush the session to obtain the auto-generated order ID
+
+            for order_item in order_items:
+                order_item.order_id = order.id
+                db.session.add(order_item)
+
+    db.session.commit()
+
+
 if __name__ == "__main__":
     with app.app_context():
+        # seed_orders()
+        # seed_reviews()
+        # seed_users()
         # restore_categories()
         # restore_products()
         # clear_tables()
