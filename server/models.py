@@ -29,11 +29,14 @@ class User(db.Model, SerializerMixin, UserMixin):
     # Relationships
     cart = db.relationship("Cart", uselist=False,
                            back_populates="user", cascade="all, delete-orphan")
-
-    reviews = db.relationship("Review", back_populates="user")
-    addresses = db.relationship("Address", back_populates="user")
-    orders = db.relationship("Order", back_populates="user")
-    payment_details = db.relationship("Payment_Detail", back_populates="user")
+    reviews = db.relationship(
+        "Review", back_populates="user", cascade="all, delete-orphan")
+    addresses = db.relationship(
+        "Address", back_populates="user", cascade="all, delete-orphan")
+    orders = db.relationship(
+        "Order", back_populates="user", cascade="all, delete-orphan")
+    payment_details = db.relationship(
+        "Payment_Detail", back_populates="user", cascade="all, delete-orphan")
 
     # Serialize Rules
     serialize_rules = ('-cart', '-reviews', '-addresses',
@@ -225,7 +228,7 @@ class Cart(db.Model, SerializerMixin):
     # Relationships
 
     user = db.relationship("User", back_populates="cart")
-    cart_items = db.relationship("Cart_Item", back_populates="cart")
+    cart_items = db.relationship("Cart_Item", back_populates="cart", cascade="all, delete-orphan")
 
     # serialize rules
     serialize_rules = ("-user", "-cart_items")
@@ -260,7 +263,7 @@ class Order(db.Model, SerializerMixin):
 
     # relationships
     user = db.relationship("User", back_populates="orders")
-    order_items = db.relationship("OrderItem", back_populates="order")
+    order_items = db.relationship("OrderItem", back_populates="order", cascade="all, delete-orphan")
     status = db.relationship("Order_Status", backref="orders")
 
     # Serialize Rules

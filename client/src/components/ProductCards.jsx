@@ -85,6 +85,7 @@ function ProductCards({ products, searchQuery }) {
   };
 
   const renderAddToCartButton = (product, index) => {
+
     const quantity = quantities[index] || 1;
 
     if (isInCart(product.id)) {
@@ -211,11 +212,15 @@ function ProductCards({ products, searchQuery }) {
                 <Card>
                   <div className="row g-0">
                     <div className="col-sm-3 d-flex align-items-center">
+                    <Link to={url}>
                       <Card.Img src={product.image_1} className="mx-auto" />
+                    </Link>
                     </div>
                     <div className="col-sm-8 align-items-center">
                       <div className="card-body">
+                      <Link to={url} style={{ textDecoration: "none", color: "#000" }}>
                         <h5 className="card-title">{product.name}</h5>
+                      </Link>
                         <p className="card-text">${product.price}</p>
                         {user ? (
                           <div className="d-flex align-items-center">
