@@ -200,8 +200,30 @@ def seed_order_status():
     db.session.commit()
 
 
+def update_order_statuses():
+    # Fetch all orders
+    orders = Order.query.all()
+
+    # Fetch all order statuses
+    order_statuses = Order_Status.query.all()
+
+    # Iterate over each order and update the status_id
+    for order in orders:
+        # Select a random order status
+        random_status = random.choice(order_statuses)
+
+        # Update the status_id of the order
+        order.status_id = random_status.id
+
+    # Commit the changes to the database
+    db.session.commit()
+
+    print("Order statuses updated successfully.")
+
+
 if __name__ == "__main__":
     with app.app_context():
+        update_order_statuses()
         # seed_order_status()
         # save_table_data_to_pickle(Review)
         # view_pickle_structure("<class 'models.Product'>.pickle")

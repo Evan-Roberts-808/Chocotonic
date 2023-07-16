@@ -15,16 +15,19 @@ def main():
         console.print("Please select an option:")
         console.print("[bold cyan]1[/bold cyan]. View inventory")
         console.print("[bold cyan]2[/bold cyan]. Order more inventory")
-        console.print("[bold cyan]3[/bold cyan]. Fulfill pending orders")
+        console.print("[bold cyan]3[/bold cyan]. View orders")
+        console.print("[bold cyan]4[/bold cyan]. Fulfill pending orders")
         console.print("[bold cyan]e[/bold cyan]. Exit")
         console.print()
 
-        choice = Prompt.ask("Selection", choices=["1", "2", "3", "e"])
+        choice = Prompt.ask("Selection", choices=["1", "2", "3", "4", "e"])
         if choice == "1":
             view_inventory()
         elif choice == "2":
             order_inventory()
         elif choice == "3":
+            view_orders()
+        elif choice == "4":
             fulfill_orders()
         elif choice == "e":
             break
@@ -35,41 +38,74 @@ def view_inventory():
     console.print("[bold]View Inventory[/bold]")
     console.print()
 
-    # Display all products and their quantities
-    products = Product.query.all()
-    if not products:
-        console.print("[bold red]No products found in inventory.[/bold red]")
-        return
-
-    # Display products and their quantities
-    table = Table(title="Inventory")
-    table.add_column("ID")
-    table.add_column("Name")
-    table.add_column("Quantity")
-    for product in products:
-        table.add_row(str(product.id), product.name, str(product.quantity))
-    console.print(table)
-    console.print()
-
-    # Prompt user for further options
-    options = {
-        "o": "Order",
-        "e": "Exit"
-    }
-    options_menu = "\n".join(
-        f"{key}. {value}" for key, value in options.items()
-    )
-    selected_option = Prompt.ask(
-        f"Please select an option:\n{options_menu}",
-        choices=list(options.keys()),
-        default="o"
-    )
-
-    if selected_option == "o":
-        order_inventory()
-    elif selected_option == "e":
-        console.print("[bold]Exiting view inventory...[/bold]")
+    while True:
+        # Display categories
+        categories = Category.query.all()
+        table = Table(title="Categories")
+        table.add_column("ID")
+        table.add_column("Name")
+        for category in categories:
+            table.add_row(str(category.id), category.name)
+        console.print(table)
         console.print()
+
+        # Prompt user to select a category or exit
+        category_choices = {
+            str(category.id): category.name for category in categories}
+        category_choices["e"] = "Exit"
+        selected_category = Prompt.ask(
+            "Select a category or exit (e):",
+            choices=category_choices,
+            default="e"
+        )
+
+        if selected_category == "e":
+            console.print("[bold]Exiting view inventory...[/bold]")
+            console.print()
+            break
+
+        if selected_category == "b":
+            continue
+
+        # Get products in the selected category
+        products = Product.query.filter_by(category_id=selected_category).all()
+        if not products:
+            console.print(
+                "[bold red]No products found in the selected category.[/bold red]")
+            continue
+
+        # Display products and their quantities
+        table = Table(title="Products")
+        table.add_column("ID")
+        table.add_column("Name")
+        table.add_column("Quantity")
+        for product in products:
+            table.add_row(str(product.id), product.name, str(product.quantity))
+        console.print(table)
+        console.print()
+
+        # Prompt user for further options
+        options = {
+            "o": "Order",
+            "b": "Back",
+            "e": "Exit"
+        }
+        options_menu = "\n".join(
+            f"{key}. {value}" for key, value in options.items())
+        selected_option = Prompt.ask(
+            f"Please select an option:\n{options_menu}",
+            choices=list(options.keys()),
+            default="o"
+        )
+
+        if selected_option == "o":
+            order_inventory()
+        elif selected_option == "b":
+            continue
+        elif selected_option == "e":
+            console.print("[bold]Exiting view inventory...[/bold]")
+            console.print()
+            break
 
 
 def order_inventory():
@@ -125,6 +161,83 @@ def order_inventory():
     else:
         console.print(
             f"[bold red]Product with ID {product_id} not found.[/bold red]")
+
+
+def view_orders():
+    console = Console()
+    console.print("[bold]View Orders[/bold]")
+    console.print()
+
+    # Fetch order statuses
+    order_statuses = Order_Status.query.all()
+    if not order_statuses:
+        console.print("[bold red]No order statuses found.[/bold red]")
+        return
+
+    # Display order statuses
+    table = Table(title="Order Statuses")
+    table.add_column("ID")
+    table.add_column("Name")
+    for status in order_statuses:
+        table.add_row(str(status.id), status.name)
+    console.print(table)
+    console.print()
+
+    # Prompt user to select an order status
+    status_id = Prompt.ask("Select an order status", choices=[
+                           str(status.id) for status in order_statuses])
+
+    # Get orders with the selected status
+    orders = Order.query.filter_by(status_id=status_id).all()
+    if not orders:
+        console.print(
+            "[bold red]No orders found with the selected status.[/bold red]")
+        return
+
+    # Display orders
+    table = Table(title="Orders")
+    table.add_column("Order ID")
+    table.add_column("Total Price", justify="right")
+    for order in orders:
+        formatted_price = "{:.2f}".format(order.total_price)
+        table.add_row(str(order.id), formatted_price)
+    console.print(table)
+    console.print()
+
+    # Prompt user to select an order
+    order_id = int(Prompt.ask("Select an order", choices=[
+        str(order.id) for order in orders]))
+
+    # Get the selected order
+    selected_order = next(
+        (order for order in orders if order.id == order_id), None
+    )
+    if selected_order:
+        # Get the order items of the selected order
+        order_items = OrderItem.query.filter_by(
+            order_id=selected_order.id).all()
+
+        # Display order items
+        table = Table(title="Order Items")
+        table.add_column("Product ID")
+        table.add_column("Product Name")
+        table.add_column("Quantity", justify="right")
+        table.add_column("Price", justify="right")
+
+        for item in order_items:
+            product = Product.query.filter_by(id=item.product_id).first()
+            if product:
+                table.add_row(
+                    str(item.product_id),
+                    product.name,
+                    str(item.quantity),
+                    "{:.2f}".format(item.price)
+                )
+        console.print(table)
+        console.print()
+    else:
+        console.print(
+            f"[bold red]Order with ID {order_id} not found.[/bold red]")
 
 
 def fulfill_orders():
