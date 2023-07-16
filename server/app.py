@@ -184,7 +184,8 @@ class UserOrderById(Resource):
                 order_info = {
                     "order_id": order.id,
                     "total_price": order.total_price,
-                    "order_items": order_items
+                    "order_items": order_items,
+                    "order_status": order.status_id
                 }
                 return order_info, 200
             else:
@@ -193,18 +194,18 @@ class UserOrderById(Resource):
             return {"error": "An error occurred while fetching the order"}, 500
 
     @login_required
-    def delete(self, order_id):
+    def patch(self, order_id):
         try:
             user_id = current_user.id
             order = Order.query.filter_by(id=order_id, user_id=user_id).first()
             if order:
-                db.session.delete(order)
+                order.status_id = 4
                 db.session.commit()
-                return {}, 204
+                return {}, 200
             else:
                 return {"error": "Order not found"}, 404
         except:
-            return {"error": "An error occurred while canceling the order"}, 500
+            return {"error": "An error occurred while cancelling the order"}, 500
 
 
 class UserPayment(Resource):

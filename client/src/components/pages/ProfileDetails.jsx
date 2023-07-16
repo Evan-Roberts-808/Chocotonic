@@ -196,7 +196,7 @@ function ProfileDetails() {
               <th>Order Date</th>
               <th>Total</th>
               <th>Order Status</th>
-              <th></th>
+              <th>View</th>
             </tr>
           </thead>
           <tbody>{orderData}</tbody>
