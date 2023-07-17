@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import {
   MDBFooter,
   MDBContainer,
@@ -25,16 +26,13 @@ function Footer() {
           <span>Get connected with us on social networks:</span>
         </div>
         <div>
-          <a href="" className="me-4">
-            <FaTwitter className="footer-social-icon" />
-          </a>
-          <a href="" className="me-4">
+          <a href="https://www.instagram.com/chocotonic_chocolate/" target="_blank" className="me-4">
             <FaInstagram className="footer-social-icon" />
           </a>
-          <a href="" className="me-4">
+          <a href="https://www.linkedin.com/in/roberts-evan/" target="_blank" className="me-4">
             <FaLinkedin className="footer-social-icon" />
           </a>
-          <a href="" className="me-4">
+          <a href="https://github.com/Evan-Roberts-808" target="_blank" className="me-4">
             <FaGithub className="footer-social-icon" />
           </a>
         </div>
@@ -62,37 +60,37 @@ function Footer() {
                 Shop
               </h6>
               <p>
-                <a href="#!" className="footer-link">
+                <Link to="/shop" className="footer-link">
                   Shop All
-                </a>
+                </Link>
               </p>
               <h6 className="text-uppercase fw-bold mb-4 footer-header">
                 Shop By Category
               </h6>
               <p>
-                <a href="#!" className="footer-link">
+                <Link to="/shop/1" className="footer-link">
                   Chocolate Bars
-                </a>
+                </Link>
               </p>
               <p>
-                <a href="#!" className="footer-link">
+                <Link to="/shop/2" className="footer-link">
                   Chocolate Bells
-                </a>
+                </Link>
               </p>
               <p>
-                <a href="#!" className="footer-link">
+                <Link to="/shop/4" className="footer-link">
                   Chocolate Squares
-                </a>
+                </Link>
               </p>
               <p>
-                <a href="#!" className="footer-link">
+                <Link to="/shop/5" className="footer-link">
                   Hot Chocolate
-                </a>
+                </Link>
               </p>
               <p>
-                <a href="#!" className="footer-link">
+                <Link to="/shop/6" className="footer-link">
                   Chocolate Truffles
-                </a>
+                </Link>
               </p>
             </MDBCol>
 
@@ -101,19 +99,19 @@ function Footer() {
                 About
               </h6>
               <p>
-                <a href="#!" className="footer-link">
+                <Link to="/about" className="footer-link">
                   About Us
-                </a>
+                </Link>
               </p>
               <p>
-                <a href="#!" className="footer-link">
+                <Link to="/sustainability" className="footer-link">
                   Sustainability
-                </a>
+                </Link>
               </p>
               <p>
-                <a href="#!" className="footer-link">
+                <Link to="/causes" className="footer-link">
                   Causes
-                </a>
+                </Link>
               </p>
             </MDBCol>
 
