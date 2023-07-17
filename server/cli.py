@@ -39,7 +39,6 @@ def view_inventory():
     console.print()
 
     while True:
-        # Display categories
         categories = Category.query.all()
         table = Table(title="Categories")
         table.add_column("ID")
@@ -49,7 +48,6 @@ def view_inventory():
         console.print(table)
         console.print()
 
-        # Prompt user to select a category or exit
         category_choices = {
             str(category.id): category.name for category in categories}
         category_choices["e"] = "Exit"
@@ -67,14 +65,12 @@ def view_inventory():
         if selected_category == "b":
             continue
 
-        # Get products in the selected category
         products = Product.query.filter_by(category_id=selected_category).all()
         if not products:
             console.print(
                 "[bold red]No products found in the selected category.[/bold red]")
             continue
 
-        # Display products and their quantities
         table = Table(title="Products")
         table.add_column("ID")
         table.add_column("Name")
@@ -84,7 +80,6 @@ def view_inventory():
         console.print(table)
         console.print()
 
-        # Prompt user for further options
         options = {
             "o": "Order",
             "b": "Back",
@@ -113,7 +108,6 @@ def order_inventory():
     console.print("[bold]Order Inventory[/bold]")
     console.print()
 
-    # Display categories
     categories = Category.query.all()
     table = Table(title="Categories")
     table.add_column("ID")
@@ -123,18 +117,15 @@ def order_inventory():
     console.print(table)
     console.print()
 
-    # Prompt user to select a category
     category_id = Prompt.ask("Select a category", choices=[
                              str(category.id) for category in categories])
 
-    # Get products in the selected category
     products = Product.query.filter_by(category_id=category_id).all()
     if not products:
         console.print(
             "[bold red]No products found in the selected category.[/bold red]")
         return
 
-    # Display products and their quantities
     table = Table(title="Products")
     table.add_column("ID")
     table.add_column("Name")
@@ -144,14 +135,11 @@ def order_inventory():
     console.print(table)
     console.print()
 
-    # Prompt user to select a product
     product_id = Prompt.ask("Select a product", choices=[
                             str(product.id) for product in products])
 
-    # Prompt user to enter quantity
     quantity = int(Prompt.ask("Enter quantity to order"))
 
-    # Update the quantity of the selected product
     product = Product.query.filter_by(id=product_id).first()
     if product:
         product.quantity += quantity
@@ -168,13 +156,11 @@ def view_orders():
     console.print("[bold]View Orders[/bold]")
     console.print()
 
-    # Fetch order statuses
     order_statuses = Order_Status.query.all()
     if not order_statuses:
         console.print("[bold red]No order statuses found.[/bold red]")
         return
 
-    # Display order statuses
     table = Table(title="Order Statuses")
     table.add_column("ID")
     table.add_column("Name")
@@ -183,18 +169,15 @@ def view_orders():
     console.print(table)
     console.print()
 
-    # Prompt user to select an order status
     status_id = Prompt.ask("Select an order status", choices=[
                            str(status.id) for status in order_statuses])
 
-    # Get orders with the selected status
     orders = Order.query.filter_by(status_id=status_id).all()
     if not orders:
         console.print(
             "[bold red]No orders found with the selected status.[/bold red]")
         return
 
-    # Display orders
     table = Table(title="Orders")
     table.add_column("Order ID")
     table.add_column("Total Price", justify="right")
@@ -204,20 +187,16 @@ def view_orders():
     console.print(table)
     console.print()
 
-    # Prompt user to select an order
     order_id = int(Prompt.ask("Select an order", choices=[
         str(order.id) for order in orders]))
 
-    # Get the selected order
     selected_order = next(
         (order for order in orders if order.id == order_id), None
     )
     if selected_order:
-        # Get the order items of the selected order
         order_items = OrderItem.query.filter_by(
             order_id=selected_order.id).all()
 
-        # Display order items
         table = Table(title="Order Items")
         table.add_column("Product ID")
         table.add_column("Product Name")
@@ -245,24 +224,20 @@ def fulfill_orders():
     console.print("[bold]Fulfill Orders[/bold]")
     console.print()
 
-    # Fetch pending orders
     pending_orders = Order.query.filter_by(status_id=1).all()
     if not pending_orders:
         console.print("[bold]No pending orders.[/bold]")
         return
 
-    # Set the number of orders to display at a time
     orders_per_page = 10
     total_orders = len(pending_orders)
     num_pages = (total_orders // orders_per_page) + 1
 
-    # Initialize variables for pagination
     current_page = 1
     start_index = (current_page - 1) * orders_per_page
     end_index = current_page * orders_per_page
 
     while True:
-        # Display orders for the current page
         table = Table(
             title=f"Pending Orders (Page {current_page}/{num_pages})")
         table.add_column("Order ID")
@@ -273,7 +248,6 @@ def fulfill_orders():
         console.print(table)
         console.print()
 
-        # Prompt user to select an action or order
         options = {
             "1": "Next",
             "2": "Previous",
@@ -308,16 +282,13 @@ def fulfill_orders():
                 console.print()
         elif selected_choice == "3":
             try:
-                # Check if the selected order ID is valid
                 order_id = int(input("Enter the ID of the order to fulfill: "))
                 selected_order = next(
                     (order for order in pending_orders if order.id == order_id), None
                 )
                 if selected_order:
-                    # Get the list of status options
                     statuses = Order_Status.query.all()
 
-                    # Display status choices in a table
                     status_table = Table(title="Status Choices")
                     status_table.add_column("ID")
                     status_table.add_column("Name")
@@ -326,7 +297,6 @@ def fulfill_orders():
                     console.print(status_table)
                     console.print()
 
-                    # Prompt user to select a status
                     selected_status_id = int(input("Select a status (ID): "))
 
                     selected_status = next(
@@ -335,7 +305,6 @@ def fulfill_orders():
                         None
                     )
                     if selected_status:
-                        # Update the status of the selected order
                         selected_order.status_id = selected_status_id
                         db.session.commit()
                         console.print(

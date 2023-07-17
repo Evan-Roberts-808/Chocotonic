@@ -108,7 +108,6 @@ def seed_users():
                 email=user_data['email'],
                 username=user_data['username'],
             )
-            # Set the password hash using the setter
             user.password_hash = password_hash.decode('utf-8')
             db.session.add(user)
         except KeyError as e:
@@ -124,7 +123,6 @@ def seed_reviews():
 
     for review_data in reviews:
         try:
-            # Create a new review object
             review = Review(
                 product_id=review_data['product_id'],
                 user_id=review_data['user_id'],
@@ -132,7 +130,6 @@ def seed_reviews():
                 review_text=review_data['review_text'],
             )
 
-            # Add the review to the database session
             db.session.add(review)
         except KeyError as e:
             print(f"KeyError: {e} not found in review_data: {review_data}")
@@ -141,28 +138,25 @@ def seed_reviews():
 
 def seed_orders():
     user_ids = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23,
-                24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42]  # List of user IDs
+                24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42]
 
-    # Fetch existing products from the database
     existing_products = Product.query.all()
 
     for user_id in user_ids:
-        # Generate random number of orders per user
+
         num_orders = random.randint(1, 5)
 
         for _ in range(num_orders):
-            status_id = 1  # Set the status ID to a desired value
+            status_id = 1
 
-            # Generate random number of order items per order
             num_order_items = random.randint(1, 5)
 
             order_items = []
             total_price = 0.0
 
             for _ in range(num_order_items):
-                # Select a random product from the existing products
                 product = random.choice(existing_products)
-                quantity = random.randint(1, 3)  # Generate random quantity
+                quantity = random.randint(1, 3)
                 price = product.price * quantity
                 total_price += price
 
@@ -179,7 +173,7 @@ def seed_orders():
                 status_id=status_id
             )
             db.session.add(order)
-            db.session.flush()  # Flush the session to obtain the auto-generated order ID
+            db.session.flush()
 
             for order_item in order_items:
                 order_item.order_id = order.id
@@ -201,21 +195,17 @@ def seed_order_status():
 
 
 def update_order_statuses():
-    # Fetch all orders
+
     orders = Order.query.all()
 
-    # Fetch all order statuses
     order_statuses = Order_Status.query.all()
 
-    # Iterate over each order and update the status_id
     for order in orders:
-        # Select a random order status
+
         random_status = random.choice(order_statuses)
 
-        # Update the status_id of the order
         order.status_id = random_status.id
 
-    # Commit the changes to the database
     db.session.commit()
 
     print("Order statuses updated successfully.")
@@ -223,7 +213,7 @@ def update_order_statuses():
 
 if __name__ == "__main__":
     with app.app_context():
-        update_order_statuses()
+        # update_order_statuses()
         # seed_order_status()
         # save_table_data_to_pickle(Review)
         # view_pickle_structure("<class 'models.Product'>.pickle")
