@@ -14,6 +14,25 @@ function Product() {
   const [quantity, setQuantity] = useState(1);
   const [activeSection, setActiveSection] = useState("details");
   const [reviews, setReviews] = useState([]);
+  const [cartItems, setCartItems] = useState([]);
+
+  useEffect(() => {
+    fetch("/api/carts")
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error("Error fetching cart items");
+        }
+      })
+      .then((cart) => {
+        const productIds = cart.items.map((item) => item.product_id);
+        setCartItems(productIds);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }, []);
 
   useEffect(() => {
     fetch(`/api/products/${id}`)
@@ -99,6 +118,7 @@ function Product() {
       .then((response) => {
         if (response.ok) {
           console.log("Item added to cart");
+          setCartItems((prevCartItems) => [...prevCartItems, product.id]);
         } else {
           throw new Error("Error adding item to cart");
         }
@@ -109,8 +129,10 @@ function Product() {
   };
 
   const handleNewReview = (newReview) => {
-    setReviews((prevReviews) => [...prevReviews, newReview])
-  }
+    setReviews((prevReviews) => [...prevReviews, newReview]);
+  };
+
+  const isInCart = cartItems.includes(product.id);
 
   return (
     <Container>
@@ -144,27 +166,41 @@ function Product() {
               </span>
             </p>
             {user ? (
-              <div className="quantity-cart-buttons">
-                <Button
-                  className="quantity-button custom-btn-primary"
-                  onClick={handleQuantityDecrement}
-                >
-                  -
-                </Button>
-                <span className="quantity-value">{quantity}</span>
-                <Button
-                  className="quantity-button custom-btn-primary"
-                  onClick={handleQuantityIncrement}
-                >
-                  +
-                </Button>
+              isInCart ? (
                 <Button
                   className="add-to-cart-button custom-btn-primary"
-                  onClick={addToCart}
+                  disabled
+                  style={{
+                    backgroundColor: "#599872",
+                    borderColor: "#599872",
+                    cursor: "not-allowed",
+                  }}
                 >
-                  Add to Cart
+                  In Cart
                 </Button>
-              </div>
+              ) : (
+                <div className="quantity-cart-buttons">
+                  <Button
+                    className="quantity-button custom-btn-primary"
+                    onClick={handleQuantityDecrement}
+                  >
+                    -
+                  </Button>
+                  <span className="quantity-value">{quantity}</span>
+                  <Button
+                    className="quantity-button custom-btn-primary"
+                    onClick={handleQuantityIncrement}
+                  >
+                    +
+                  </Button>
+                  <Button
+                    className="add-to-cart-button custom-btn-primary"
+                    onClick={addToCart}
+                  >
+                    Add to Cart
+                  </Button>
+                </div>
+              )
             ) : (
               <></>
             )}

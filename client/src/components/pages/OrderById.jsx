@@ -10,7 +10,7 @@ function OrderById() {
   const { order_id } = useParams();
   const navigate = useNavigate();
   const [confirmation, setConfirmation] = useState(false);
-
+  console.log(order)
   useEffect(() => {
     fetch(`/api/user/orders/${order_id}`)
       .then((response) => {
@@ -38,10 +38,17 @@ function OrderById() {
 
   const handleYes = () => {
     fetch(`/api/user/orders/${order_id}`, {
-      method: "DELETE",
-    }).then(() => {
-      navigate("/profile-details");
-    });
+      method: "PATCH",
+      headers: {
+        'Content-Type':'application/json'
+      }
+    })
+      .then(() => {
+        navigate("/profile-details");
+      })
+      .catch((error) => {
+        console.error("Error cancelling the order:", error);
+      });
   };
 
   const handleNo = () => {
@@ -88,28 +95,21 @@ function OrderById() {
         {confirmation ? (
           <>
             <p>Are you sure you'd like to cancel your order?</p>
-            <Button
-              className="user-delete"
-              variant="success"
-              onClick={handleYes}
-            >
+            <Button className="user-delete" variant="success" onClick={handleYes}>
               Yes
             </Button>
             <Button className="user-delete" variant="danger" onClick={handleNo}>
               No
             </Button>
           </>
-        ) : (
-          <Button
-            className="custom-btn-primary cancel-order"
-            onClick={showConfirmation}
-          >
+        ) : order.order_status !== 4 ? (
+          <Button className="custom-btn-primary cancel-order" onClick={showConfirmation}>
             Cancel Order
           </Button>
-        )}
+        ) : null}
       </Row>
     </Container>
   );
-}
+        }
 
 export default OrderById;
